@@ -29,6 +29,8 @@ struct fw_rule {
     u_int32_t dest_port;
 
     u_int8_t protocol;
+
+    u_int8_t index;
 };
 
 enum fw_action {
@@ -45,12 +47,14 @@ struct fw_comm
 };
 
 
-
+/*
+* Function to show all commands.
+*/
 void show_info()
 {
     printf("\n"
             "-a --add \t\t Add the rule\n"
-            "-d --delete INDEX \t\t Delete the rule having index = INDEX\n"
+            "-d --delete INDEX \t Delete the rule having index = INDEX\n"
             "-A --all \t\t Show all the rules\n"
             "\n"
             "-i --in \t\t Input\n"
@@ -71,7 +75,6 @@ void show_rules()
     printf("NOT DONE YET!!!\n");
 }
 
-
 /*
 * Initialization of structure of rule
 */
@@ -86,6 +89,8 @@ void init_comm(struct fw_comm *comm)
     comm->rule.dest_mask = NOT_STATED;
     comm->rule.dest_port = NOT_STATED;
     comm->rule.protocol = NOT_STATED;
+
+    comm->rule.index = NOT_STATED;
 }
 
 /*
@@ -106,7 +111,7 @@ uint64_t parse_add_arg(const char *str, int min_value, int max_value)
 
     num = strtol(str, &end, 10);
     if (num < min_value || num > max_value || str == end)
-        return  EXIT_FAILURE;
+        return EXIT_FAILURE;
 
     return num;
 }
@@ -132,7 +137,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
 {
     int res, comm_ind, protocol;
     int64_t param;
-    const char* short_comm = "adAiop:s:r:t:e:h";
+    const char* short_comm = "ad:Aiop:s:r:t:e:h";
     struct in_addr addr;
     struct fw_comm comm;
 
@@ -145,7 +150,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
     struct option long_comm[] = 
     {
         {"add", no_argument, 0, 'a'},
-        {"delete", no_argument, 0, 'd'},
+        {"delete", required_argument, 0, 'd'},
         {"all", no_argument, 0, 'A'},
         {"in", no_argument, 0, 'i'},
         {"out", no_argument, 0, 'o'},
@@ -181,6 +186,12 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
                 return ACTION_MENTIONED;
 
             comm.action = DELETE;
+
+            param = parse_add_arg(optarg, 0, USHRT_MAX);
+            if (param == EXIT_FAILURE)
+                return INCORRECT_INDEX_RULE;
+
+            comm.rule.index = param;
             break;
 
         case 'A':
@@ -240,7 +251,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
                 return SRC_PORT_MENTIONED;
 
             param = parse_add_arg(optarg, 0, USHRT_MAX);
-            if (param < 0)
+            if (param == EXIT_FAILURE)
                 return INCORRECT_SRC_PORT;
 
             comm.rule.src_port = htons((uint16_t)param);
@@ -251,7 +262,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
                 return DEST_PORT_MENTIONED;
 
             param = parse_add_arg(optarg, 0, USHRT_MAX);
-            if (param < 0)
+            if (param == EXIT_FAILURE)
                 return INCORRECT_DEST_PORT;
 
             comm.rule.dest_port = htons((uint16_t)param);
@@ -266,10 +277,16 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
     if (comm.action == NONE)
         return ACTION_NOT_MENTIONED;
 
+    if (comm.action == DELETE)
+        return EXIT_SUCCESS;
+
     if (comm.rule.in == NOT_STATED)
         return DIRECTION_NOT_MENTIONED;
 
-    /* TODO: other checks (+ delete situation)*/
+    if (comm.rule.src_ip == NOT_STATED && comm.rule.src_port == NOT_STATED && \
+        comm.rule.dest_ip == NOT_STATED && comm.rule.dest_port == NOT_STATED && \
+        comm.rule.protocol == NOT_STATED && comm.rule.index == NOT_STATED)
+        return KEYS_NOT_MENTIONED;
 
     *res_comm = comm;
 
@@ -333,13 +350,13 @@ int main(int argc, char *argv[])
         case DIRECTION_NOT_MENTIONED:
             printf("ERROR: direction (in/out) is not mentioned\n");
             break;
+        case INCORRECT_INDEX_RULE:
+            printf("ERROR: incorrect index of rule\n");
+            break;
+        case KEYS_NOT_MENTIONED:
+            printf("ERROR: keys are not mentioned\n");
+            break;
         /*case :
-
-            break;
-        case :
-
-            break;
-        case :
 
             break;*/
         
