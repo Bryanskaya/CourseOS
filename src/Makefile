@@ -1,11 +1,14 @@
 
-#obj-m += parse_comm.o
+obj-m += fw_module.o
 
-all: fw_comm.o
+all: fw.o fw_module.o
 
-fw_comm.o: fw_comm.c
-	gcc -o fw_comm.o fw_comm.c	
-#	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+fw.o: fw.c
+	gcc -o fw.o fw.c	
+
+fw_module.o: 
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
 clean:
-	rm -rf fw_comm *.o
-#	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+	rm -rf fw *.o
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
