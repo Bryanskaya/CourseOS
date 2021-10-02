@@ -11,7 +11,6 @@
 
 
 #define DEVICE_MAJOR_NUMBER     100
-#define DEVICE_FNAME            "fw_file"
 #define BUF_LEN                 200
 
 #define IPPROTO_TCP             6
@@ -37,14 +36,14 @@ struct rule_item {
 
 ssize_t fw_read(struct file *filp, char __user *buff, size_t count, loff_t *f_pos)
 {
-    
-
     return 0;
 }
 
 ssize_t fw_write(struct file *filp, const char __user *buff, size_t count, 
     loff_t *f_pos)
 {
+    printk(KERN_INFO ">>> FIREWALL: func write was called");
+
     return 0;
 }
 
@@ -198,8 +197,6 @@ static int __init fw_init(void)
 
     INIT_LIST_HEAD(&in_list);
     INIT_LIST_HEAD(&out_list);
-
-
 
     printk(KERN_INFO ">>> FIREWALL was loaded. Major number of char device %s is %d",
             DEVICE_FNAME, DEVICE_MAJOR_NUMBER);

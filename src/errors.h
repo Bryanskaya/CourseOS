@@ -3,6 +3,9 @@
 
 
 #define LACK_ARGUMENTS              1000
+#define DEVICE_NOT_AVAILABLE        1001
+#define RULE_ADDITION_FAILED        1002
+#define MEMORY_ERROR                1003
 
 #define ACTION_MENTIONED            2000
 #define DIRECTION_MENTIONED         2001

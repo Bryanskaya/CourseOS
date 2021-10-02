@@ -6,8 +6,11 @@
 #define OUT         2
 #define NOT_STATED  100
 
+#define DEVICE_FNAME            "fw_file"
 
-struct fw_rule {
+
+struct fw_rule 
+{
     u_int32_t in;
     
     u_int32_t src_ip;
@@ -23,7 +26,8 @@ struct fw_rule {
     u_int8_t index;
 };
 
-enum fw_action {
+enum fw_action 
+{
     ADD = 1,
     DELETE = 2,
     SHOW = 3,

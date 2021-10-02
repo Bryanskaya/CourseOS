@@ -36,9 +36,74 @@ void show_info()
             "-h --help \t\t Available commands\n\n");
 }
 
-void show_rules()
+/*
+* Function to show all rules.
+*/
+int show_rules()
 {
-    printf("NOT DONE YET!!!\n");
+    FILE *fd;
+    char *buf;
+    int count_byte;
+    struct fw_rule *rule;
+
+    fd = fopen(DEVICE_FNAME, "r");
+    if (fd == NULL)
+        return DEVICE_NOT_AVAILABLE;
+
+    buf = (char *)malloc(sizeof(*rule));
+    if (buf == NULL)
+        return MEMORY_ERROR;
+
+    printf("IN/OUT \t source address \t source port \t"
+	       "destination address \t destination port \t protocol\n");
+    for (int i = 0; i < 110; i++)
+        printf("¯");
+    printf("\n");
+    
+    while ((count_byte = fread(buf, 1, sizeof(struct fw_comm), fd)) > 0) 
+    {
+		rule = (struct fw_rule *)buf;
+
+		printf("%-8s ", rule->in == IN ? "IN" : "OUT");
+		/*addr.s_addr = rule->s_ip;
+		printf("%-15s  ", inet_ntoa(addr));
+		addr.s_addr = rule->s_mask;
+		printf("%-15s  ", inet_ntoa(addr));
+		printf("%-5d  ", ntohs(rule->s_port));
+		addr.s_addr = rule->d_ip;
+		printf("%-15s  ", inet_ntoa(addr));
+		addr.s_addr = rule->d_mask;
+		printf("%-15s  ", inet_ntoa(addr));
+		printf("%-5d  ", ntohs(rule->d_port));
+		printf("%-3d\n", rule->proto);*/
+        printf("\n");
+	}
+
+	free(buf);
+	fclose(fd);
+
+    return EXIT_SUCCESS;
+}
+
+/*
+* Function to write rule to a char file.
+*/
+int write_rule(struct fw_comm *comm)
+{
+    FILE *fd;
+    int count_byte;
+
+    fd = fopen(DEVICE_FNAME, "a");
+    if (fd == NULL)
+        return DEVICE_NOT_AVAILABLE;
+
+    count_byte = fwrite(comm, 1, sizeof(*comm), fd);
+    if (count_byte != sizeof(*comm))
+        return RULE_ADDITION_FAILED;
+
+    fclose(fd);
+
+    return EXIT_SUCCESS;
 }
 
 /*
@@ -57,14 +122,6 @@ void init_comm(struct fw_comm *comm)
     comm->rule.protocol = NOT_STATED;
 
     comm->rule.index = NOT_STATED;
-}
-
-/*
-* Function to write rule to a char file.
-*/
-int write_rule(struct fw_comm *comm)
-{
-    printf("NOT DONE YET!!!\n");
 }
 
 /*
@@ -243,8 +300,11 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
     if (comm.action == NONE)
         return ACTION_NOT_MENTIONED;
 
-    if (comm.action == DELETE)
+    if (comm.action == DELETE || comm.action == SHOW)
+    {
+        *res_comm = comm;
         return EXIT_SUCCESS;
+    }
 
     if (comm.rule.in == NOT_STATED)
         return DIRECTION_NOT_MENTIONED;
@@ -333,16 +393,43 @@ int main(int argc, char *argv[])
         return res;
     }
         
-
     switch (comm.action)
     {
-    case ADD:
-    case DELETE:
-        /* TODO */
-        break;
-    case SHOW:
-        show_rules();
-        break;
+        case ADD:
+        case DELETE:
+            res = write_rule(&comm);
+
+            switch (res)
+            {
+                case DEVICE_NOT_AVAILABLE:
+                    printf("ERROR: denied access to the device\n");
+                    break;
+                case RULE_ADDITION_FAILED:
+                    printf("ERROR: operation was failed.\n");
+                    break;
+                case EXIT_SUCCESS:
+                    printf("Rule was successfully added.\n");
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case SHOW:
+            res = show_rules();
+
+            switch (res)
+            {
+                case DEVICE_NOT_AVAILABLE:
+                    printf("ERROR: denied access to the device\n");
+                    break;
+                case MEMORY_ERROR:
+                    printf("ERROR: problems with memory allocation");
+                    break;
+                
+                default:
+                    break;
+            }
+            break;
     }
     
 
