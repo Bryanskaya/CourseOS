@@ -4,6 +4,17 @@
 #include <linux/init.h> 
 #include <linux/list.h>
 #include <linux/slab.h>
+#include <linux/cdev.h> 
+#include <linux/device.h>
+#include <linux/types.h>
+
+
+#include <linux/fcntl.h>
+#include <linux/delay.h>
+#include <linux/syscalls.h>
+
+#include <linux/miscdevice.h>
+#include <linux/stat.h>
 
 #include <linux/string.h>
 
@@ -23,6 +34,8 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Bryanskaya Ekaterina <bryanskayakatya@yandex.ru>");
 
+int major;
+struct class *memory_class;
 
 struct list_head in_list;
 struct list_head out_list;
@@ -49,14 +62,14 @@ ssize_t fw_write(struct file *filp, const char __user *buff, size_t count,
 
 int fw_open(struct inode *inode, struct file *file)
 {
-    printk(KERN_INFO "FIREWALL: associated char device was opened");
+    printk(KERN_INFO ">>> FIREWALL: associated char device was opened");
 
     return 0;
 }
 
 int fw_release(struct inode *inode, struct file *file)
 {
-    printk(KERN_INFO "FIREWALL: associated char device was closed");
+    printk(KERN_INFO ">>> FIREWALL: associated char device was closed");
 
     return 0;
 }
@@ -173,10 +186,7 @@ static void del_rule(struct fw_rule *rule)
 }
 
 
-
-
-
-struct file_operations fw_fops = {
+static struct file_operations fw_fops = {
     .owner = THIS_MODULE,
     .read = fw_read,
     .write = fw_write,
@@ -184,12 +194,19 @@ struct file_operations fw_fops = {
     .release = fw_release,
 };
 
+struct miscdevice dev = {
+    .minor = MISC_DYNAMIC_MINOR,
+    .name = DEVICE_FNAME,
+    .fops = &fw_fops,
+    .mode = S_IRWXU | S_IWGRP | S_IWOTH | S_IROTH,
+};
+
 static int __init fw_init(void)
 {
-    int res;
+    int res = 0;
 
-    res = register_chrdev(DEVICE_MAJOR_NUMBER, DEVICE_FNAME, &fw_fops);
-    if (res < 0)
+    res = misc_register(&dev);
+    if (res)
     {
         printk(KERN_INFO ">>> FIREWALL: registration was failed");
         return res;
@@ -198,16 +215,16 @@ static int __init fw_init(void)
     INIT_LIST_HEAD(&in_list);
     INIT_LIST_HEAD(&out_list);
 
-    printk(KERN_INFO ">>> FIREWALL was loaded. Major number of char device %s is %d",
-            DEVICE_FNAME, DEVICE_MAJOR_NUMBER);
+    printk(KERN_INFO ">>> FIREWALL was loaded. Major number of char device %s is 10, minor is %d",
+            DEVICE_FNAME, dev.minor);
 
-    return 0;
+    return res;
 }
 
 
 static void __exit fw_exit(void)
 {
-    unregister_chrdev(DEVICE_MAJOR_NUMBER, DEVICE_FNAME);
+    misc_deregister(&dev);
 
     printk(KERN_INFO ">>> FIREWALL unloaded!\n");
 }

@@ -4,6 +4,9 @@
 #include <arpa/inet.h>
 #include <limits.h>
 #include <string.h>
+#include <fcntl.h>
+
+#include <unistd.h>
 
 #include "errors.h"
 #include "fw.h"
@@ -90,18 +93,19 @@ int show_rules()
 */
 int write_rule(struct fw_comm *comm)
 {
-    FILE *fd;
+    //FILE *fd;
+    int fd;
     int count_byte;
 
-    fd = fopen(DEVICE_FNAME, "a");
-    if (fd == NULL)
+    fd = open("/dev/fw_file", O_WRONLY | O_APPEND, S_IWUSR);
+    if (fd < 0)
         return DEVICE_NOT_AVAILABLE;
 
-    count_byte = fwrite(comm, 1, sizeof(*comm), fd);
-    if (count_byte != sizeof(*comm))
-        return RULE_ADDITION_FAILED;
+    write(fd, comm, sizeof(*comm));
+    /*if (count_byte != sizeof(*comm))
+        return RULE_ADDITION_FAILED;*/
 
-    fclose(fd);
+    close(fd);
 
     return EXIT_SUCCESS;
 }

@@ -7,6 +7,7 @@
 #define NOT_STATED  100
 
 #define DEVICE_FNAME            "fw_file"
+#define DEVICE_CLASS            "fw_class"
 
 
 struct fw_rule 
