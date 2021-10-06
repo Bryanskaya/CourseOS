@@ -40,34 +40,48 @@ void show_info()
 }
 
 /*
-* Function to show all rules.
+* Function to print a head of table.
 */
-int show_rules()
+void print_head()
 {
-    FILE *fd;
-    char *buf;
-    int count_byte;
-    struct fw_rule *rule;
-
-    fd = fopen(DEVICE_FNAME, "r");
-    if (fd == NULL)
-        return DEVICE_NOT_AVAILABLE;
-
-    buf = (char *)malloc(sizeof(*rule));
-    if (buf == NULL)
-        return MEMORY_ERROR;
-
     printf("IN/OUT \t source address \t source port \t"
 	       "destination address \t destination port \t protocol\n");
     for (int i = 0; i < 110; i++)
         printf("¯");
     printf("\n");
+}
+
+/*
+* Function to show all rules.
+*/
+int show_rules()
+{
+    //FILE *fd;
+    int fd;
+    char *buf;
+    struct fw_rule *rule;
+
+    fd = open("/dev/fw_file", O_RDONLY);
+    if (fd < 0)
+        return DEVICE_NOT_AVAILABLE;
+
+    /*fd = fopen("/dev/fw_file", "r");
+	if(fd == NULL) {
+		return DEVICE_NOT_AVAILABLE;
+	}*/
+
+    buf = (char *)malloc(sizeof(*rule));
+    if (buf == NULL)
+        return MEMORY_ERROR;
+
+    print_head();
     
-    while ((count_byte = fread(buf, 1, sizeof(struct fw_comm), fd)) > 0) 
+    while (read(fd, buf, sizeof(struct fw_comm *)) > 0) 
+    //while (fread(buf, 1, sizeof(struct fw_comm), fd) > 0)
     {
 		rule = (struct fw_rule *)buf;
 
-		printf("%-8s ", rule->in == IN ? "IN" : "OUT");
+		printf("%-8s %d", rule->in == IN ? "IN" : "OUT", rule->in);
 		/*addr.s_addr = rule->s_ip;
 		printf("%-15s  ", inet_ntoa(addr));
 		addr.s_addr = rule->s_mask;
@@ -80,10 +94,11 @@ int show_rules()
 		printf("%-5d  ", ntohs(rule->d_port));
 		printf("%-3d\n", rule->proto);*/
         printf("\n");
+        break;
 	}
 
 	free(buf);
-	fclose(fd);
+	close(fd);
 
     return EXIT_SUCCESS;
 }
@@ -93,17 +108,15 @@ int show_rules()
 */
 int write_rule(struct fw_comm *comm)
 {
-    //FILE *fd;
     int fd;
     int count_byte;
 
-    fd = open("/dev/fw_file", O_WRONLY | O_APPEND, S_IWUSR);
+    fd = open("/dev/fw_file", O_WRONLY | O_APPEND);
     if (fd < 0)
         return DEVICE_NOT_AVAILABLE;
 
+    //write(fd, comm, sizeof(comm));
     write(fd, comm, sizeof(*comm));
-    /*if (count_byte != sizeof(*comm))
-        return RULE_ADDITION_FAILED;*/
 
     close(fd);
 
@@ -267,6 +280,8 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
             if (comm.rule.dest_ip != NOT_STATED)
                 return DEST_IP_MENTIONED;
 
+            inet_aton(optarg, &addr);
+            printf("optarg %s %d\n\n", optarg, addr.s_addr);
             if (!inet_aton(optarg, &addr))
                 return INCORRECT_DEST_IP;
 
