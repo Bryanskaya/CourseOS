@@ -8,6 +8,12 @@
 #include <linux/device.h>
 #include <linux/types.h>
 
+#include <linux/netfilter_ipv4.h>
+#include <linux/netfilter.h>
+#include <linux/in.h>
+#include <linux/ip.h>
+#include <linux/tcp.h>
+#include <linux/udp.h>
 
 #include <linux/fcntl.h>
 #include <linux/delay.h>
@@ -24,8 +30,8 @@
 #define DEVICE_MAJOR_NUMBER     100
 #define BUF_LEN                 200
 
-#define IPPROTO_TCP             6
-#define IPPROTO_UDP             17
+/*#define IPPROTO_TCP             6
+#define IPPROTO_UDP             17*/
 
 
 #define IP_POS(ip, pos) (ip >> ((8 * (3 - pos))) & 0xFF)
@@ -77,60 +83,24 @@ char* str_rule(struct fw_rule *rule)
         count_bytes += snprintf(res, 10, "OUT \t ");
 
     if (rule->src_ip != NOT_STATED)
-    {
         count_bytes = snprintf(res, 30, "scp_ip: %u.%u.%u.%u \t ", 
                                         IP_POS(rule->src_ip, 3), 
                                         IP_POS(rule->src_ip, 2),
                                         IP_POS(rule->src_ip, 1),
                                         IP_POS(rule->src_ip, 0));
 
-        /*strcat(res, "scp_ip: ");
-        strcat(res, IP_POS(rule->src_ip, 3));
-        strcat(res, ".");
-        strcat(res, str(IP_POS(rule->src_ip, 2)));
-        strcat(res, ".");
-        strcat(res, str(IP_POS(rule->src_ip, 1)));
-        strcat(res, ".");
-        strcat(res, str(IP_POS(rule->src_ip, 0)));
-        strcat(res, " ");*/
-    }
-
     if (rule->src_port != NOT_STATED)
-    {
-        count_bytes += snprintf(res + count_bytes, 20, "src_port: %u \t ", rule->src_port);
-
-        /*strcat(res, "src_port: ");
-        strcat(res, rule->src_port);
-        strcat(res, " ");*/
-    }
+        count_bytes += snprintf(res + count_bytes, 20, "src_port: %u \t ", ntohs(rule->src_port));
 
     if (rule->dest_ip != NOT_STATED)
-    {
         count_bytes += snprintf(res + count_bytes, 30, "dest_ip: %u.%u.%u.%u \t ",
                                 IP_POS(rule->dest_ip, 3),
                                 IP_POS(rule->dest_ip, 2),
                                 IP_POS(rule->dest_ip, 1),
                                 IP_POS(rule->dest_ip, 0));
 
-        /*strcat(res, "dest_ip: ");
-        strcat(res, str(IP_POS(rule->dest_ip, 3)));
-        strcat(res, ".");
-        strcat(res, str(IP_POS(rule->dest_ip, 2)));
-        strcat(res, ".");
-        strcat(res, str(IP_POS(rule->dest_ip, 1)));
-        strcat(res, ".");
-        strcat(res, str(IP_POS(rule->dest_ip, 0)));
-        strcat(res, " ");*/
-    }
-
     if (rule->dest_port != NOT_STATED)
-    {
-        count_bytes += snprintf(res + count_bytes, 20, "dest_port: %u \t ", rule->dest_port);
-
-        /*strcat(res, "dest_port: ");
-        strcat(res, rule->dest_port);
-        strcat(res, " ");*/
-    }
+        count_bytes += snprintf(res + count_bytes, 20, "dest_port: %u \t ", ntohs(rule->dest_port));
 
     if (rule->protocol != NOT_STATED)
     {
@@ -138,9 +108,6 @@ char* str_rule(struct fw_rule *rule)
             snprintf(res + count_bytes, 20, "protocol: TCP");
         else if (rule->protocol == IPPROTO_UDP)
             snprintf(res + count_bytes, 20, "protocol: UDP");
-
-        /*strcat(res, "protocol: ");
-        strcat(res, rule->protocol);*/
     }
 
     return res;
@@ -149,10 +116,9 @@ char* str_rule(struct fw_rule *rule)
 
 static void add_rule(struct fw_rule *rule)
 {
-    printk(KERN_INFO "add rule was called");
-    printk(KERN_INFO "%s", str_rule(rule));
+    printk(KERN_INFO ">>> FIREWALL: func add rule was called");
 
-    /*struct rule_item *node = (struct rule_item *)kmalloc(sizeof(struct rule_item), GFP_KERNEL);
+    struct rule_item *node = (struct rule_item *)kmalloc(sizeof(struct rule_item), GFP_KERNEL);
     if (node == NULL)
     {
         printk(KERN_INFO ">>> FIREWALL: addition a new rule was failed");
@@ -162,17 +128,11 @@ static void add_rule(struct fw_rule *rule)
     node->rule = *rule;
 
     if (node->rule.in == IN)
-    {
         list_add_tail(&node->list, &in_list);
-        printk(KERN_INFO ">>> FIREWALL: new rule (in) was added");
-    }
     else
-    {
         list_add_tail(&node->list, &out_list);
-        printk(KERN_INFO ">>> FIREWALL: new rule (out) was added");
-    }
 
-    printk(KERN_INFO ">>> FIREWALL: new rule was added. Rule: %s", str_rule(&(node->rule)));*/
+    printk(KERN_INFO ">>> FIREWALL: new rule was added. Rule: %s", str_rule(&(node->rule)));
 }
 
 static void del_rule(struct fw_rule *rule)
@@ -202,94 +162,63 @@ ssize_t fw_read(struct file *filp, char __user *buff, size_t count, loff_t *f_po
 	static struct list_head *out_lst = &out_list;
     struct rule_item *node;
     char *read_ptr;
-    int bytes_read = 0;
 
     printk(KERN_INFO ">>> FIREWALL: func read was called");
 
-    if (in_lst->next == &in_list)
-
-    /*if (in_lst->next != &in_list)
-    {*/
-        printk(KERN_INFO "if in_list %ld", count);
-
-        node = list_entry(in_lst, struct rule_item, list);
-        printk(KERN_INFO "if %d", node->rule.in);
+    if (in_lst->next != &in_list)
+    {
+        node = list_entry(in_lst->next, struct rule_item, list);
         read_ptr = (char *)&node->rule;
         in_lst = in_lst->next;
-
-        printk(KERN_INFO "if %d", node->rule.in);
-    /*}
+    }
     else if (out_lst->next != &out_list)
     {
-        printk(KERN_INFO "if out_list");
-
         node = list_entry(out_lst->next, struct rule_item, list);
         read_ptr = (char *)&node->rule;
         out_lst = out_lst->next;
     }
     else
     {
-        printk(KERN_INFO "else");
-
         in_lst = &in_list;
         out_lst = &out_list;
+        
         return 0;
-    }*/
+    }
     
-    while (count && (bytes_read < sizeof(struct fw_rule *)))
+    if (copy_to_user(buff, read_ptr, count))
     {
-        put_user(read_ptr[bytes_read], &(buff[bytes_read]));
-        bytes_read++;
-        count--;
-        printk(KERN_INFO "bytes_read %c", read_ptr[bytes_read - 1]);
+        printk(KERN_INFO ">>> FIREWALL: copy_to_user error");
+        return -EFAULT;
     }
 
-    //return bytes_read;
-    return 1;
+    return count;
 }
 
-ssize_t fw_write(struct file *filp, const char __user *buff, size_t count, 
-    loff_t *f_pos)
+ssize_t fw_write(struct file *filp, const char __user *buff, size_t count, loff_t *f_pos)
 {
-    //struct fw_comm rule_full;
-    struct fw_comm *rule_full;
-    int bytes_write = 0;
+    struct fw_comm rule_full;
 
     printk(KERN_INFO ">>> FIREWALL: func write was called");
 
-    printk(KERN_INFO "count %ld sizeof(rule_full) %ld sizeof(struct fw_comm) %ld sizeof(buffer) %ld sizeof(buff) %ld", 
-    count, sizeof(rule_full), sizeof(struct fw_comm), sizeof(buffer), sizeof(buff));
-
-    if (count < sizeof(*rule_full))
+    if (count < sizeof(struct fw_comm))
     {
         printk(KERN_INFO ">>> FIREWALL: incorrect rule");
         return -EFAULT;
     }
 
-    /*if (copy_from_user(&buffer[bytes_write], buff, count))
+    if (copy_from_user(&rule_full, buff, count))
     {
         printk(KERN_INFO ">>> FIREWALL: copy_from_user error");
         return -EFAULT;
-    }*/
-
-    while (count && (bytes_write < sizeof(*rule_full)))
-    {
-        get_user(buffer[bytes_write], buff + bytes_write);
-        bytes_write++;
-        count--;
     }
 
-    //bytes_write += count;
-
-    rule_full = (struct fw_comm *)buffer;
-
-    switch (rule_full->action)
+    switch (rule_full.action)
     {
     case ADD:
-        add_rule(&rule_full->rule);
+        add_rule(&rule_full.rule);
         break;
     case DELETE:
-        del_rule(&rule_full->rule);
+        del_rule(&rule_full.rule);
         break;
     
     default:
@@ -297,9 +226,30 @@ ssize_t fw_write(struct file *filp, const char __user *buff, size_t count,
         break;
     }
 
-    return bytes_write;
+    return 0;
 }
 
+/*
+static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+
+
+    return 1;
+}*/
+/*
+* struct sk_buff *skb - socket buffer
+*/
+static unsigned int fw_in_filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+    return 1;
+    //return filter(priv, skb, state, &in_list);
+}
+
+static unsigned int fw_out_filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+    return 1;
+    //return filter(priv, skb, state, &out_list);
+}
 
 static struct file_operations fw_fops = {
     .owner = THIS_MODULE,
@@ -315,6 +265,23 @@ struct miscdevice dev = {
     .fops = &fw_fops,
     .mode = S_IRWXU | S_IWGRP | S_IWOTH | S_IROTH,
 };
+
+struct nf_hook_ops fw_in_hook_ops = 
+{
+    .hook = fw_in_filter,
+    .pf = PF_INET,
+    .hooknum = NF_INET_PRE_ROUTING,
+    .priority = NF_IP_PRI_FIRST
+};
+
+struct nf_hook_ops fw_out_hook_ops = 
+{
+    .hook = fw_out_filter,
+    .pf = PF_INET,
+    .hooknum = NF_INET_LOCAL_OUT,
+    .priority = NF_IP_PRI_FIRST
+};
+
 
 static int __init fw_init(void)
 {

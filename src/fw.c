@@ -56,45 +56,64 @@ void print_head()
 */
 int show_rules()
 {
-    //FILE *fd;
     int fd;
     char *buf;
     struct fw_rule *rule;
+    struct in_addr addr;
 
     fd = open("/dev/fw_file", O_RDONLY);
     if (fd < 0)
         return DEVICE_NOT_AVAILABLE;
 
-    /*fd = fopen("/dev/fw_file", "r");
-	if(fd == NULL) {
-		return DEVICE_NOT_AVAILABLE;
-	}*/
-
-    buf = (char *)malloc(sizeof(*rule));
+    buf = (char *)malloc(sizeof(struct fw_rule));
     if (buf == NULL)
         return MEMORY_ERROR;
 
     print_head();
     
-    while (read(fd, buf, sizeof(struct fw_comm *)) > 0) 
-    //while (fread(buf, 1, sizeof(struct fw_comm), fd) > 0)
+    while (read(fd, buf, sizeof(struct fw_comm)) > 0) 
     {
 		rule = (struct fw_rule *)buf;
 
-		printf("%-8s %d", rule->in == IN ? "IN" : "OUT", rule->in);
-		/*addr.s_addr = rule->s_ip;
-		printf("%-15s  ", inet_ntoa(addr));
-		addr.s_addr = rule->s_mask;
-		printf("%-15s  ", inet_ntoa(addr));
-		printf("%-5d  ", ntohs(rule->s_port));
-		addr.s_addr = rule->d_ip;
-		printf("%-15s  ", inet_ntoa(addr));
-		addr.s_addr = rule->d_mask;
-		printf("%-15s  ", inet_ntoa(addr));
-		printf("%-5d  ", ntohs(rule->d_port));
-		printf("%-3d\n", rule->proto);*/
+		printf("%-8s ", rule->in == IN ? "IN" : "OUT");
+
+        if (rule->src_ip != NOT_STATED)
+        {
+            addr.s_addr = rule->src_ip;
+		    printf("%-15s ", inet_ntoa(addr));
+        }
+        else
+            printf("%-18s ", "---");
+        
+        if (rule->src_port != NOT_STATED)
+		    printf("%-15d  ", ntohs(rule->src_port));
+        else
+            printf("%-18s ", "---");
+
+        if (rule->dest_ip != NOT_STATED)
+        {
+            addr.s_addr = rule->dest_ip;
+		    printf("%-15s  ", inet_ntoa(addr));
+        }
+        else
+            printf("%-18s ", "---");
+		
+        if (rule->dest_port != NOT_STATED)
+		    printf("%-15d  ", ntohs(rule->dest_port));
+        else
+            printf("%-18s ", "---");
+
+        if (rule->protocol != NOT_STATED)
+        {
+            if (rule->protocol == IPPROTO_TCP)
+                printf("%-5s ", "TCP");
+            else if (rule->protocol == IPPROTO_UDP)
+                printf("%-5s ", "UDP");
+        }
+        else
+            printf("%-8s ", "---");
+        
         printf("\n");
-        break;
 	}
 
 	free(buf);
@@ -115,7 +134,6 @@ int write_rule(struct fw_comm *comm)
     if (fd < 0)
         return DEVICE_NOT_AVAILABLE;
 
-    //write(fd, comm, sizeof(comm));
     write(fd, comm, sizeof(*comm));
 
     close(fd);
@@ -280,8 +298,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
             if (comm.rule.dest_ip != NOT_STATED)
                 return DEST_IP_MENTIONED;
 
-            inet_aton(optarg, &addr);
-            printf("optarg %s %d\n\n", optarg, addr.s_addr);
+            printf("**** %s", optarg);
             if (!inet_aton(optarg, &addr))
                 return INCORRECT_DEST_IP;
 
