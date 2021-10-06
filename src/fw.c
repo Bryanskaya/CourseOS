@@ -99,7 +99,7 @@ int show_rules()
             printf("%-18s ", "---");
 		
         if (rule->dest_port != NOT_STATED)
-		    printf("%-15d  ", ntohs(rule->dest_port));
+		    printf("%-18d  ", ntohs(rule->dest_port));
         else
             printf("%-18s ", "---");
 
