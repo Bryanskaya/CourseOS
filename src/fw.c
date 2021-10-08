@@ -44,8 +44,7 @@ void show_info()
 */
 void print_head()
 {
-    printf("IN/OUT \t source address \t source port \t"
-	       "destination address \t destination port \t protocol\n");
+    printf("IN/OUT \t source address \t source port \t destination address \t destination port \t protocol\n");
     for (int i = 0; i < 110; i++)
         printf("¯");
     printf("\n");
@@ -80,28 +79,28 @@ int show_rules()
         if (rule->src_ip != NOT_STATED)
         {
             addr.s_addr = rule->src_ip;
-		    printf("%-15s ", inet_ntoa(addr));
+		    printf("%-23s ", inet_ntoa(addr));
         }
         else
-            printf("%-18s ", "---");
+            printf("%-23s ", "---");
         
         if (rule->src_port != NOT_STATED)
-		    printf("%-15d  ", ntohs(rule->src_port));
+		    printf("%-15d ", ntohs(rule->src_port));
         else
-            printf("%-18s ", "---");
+            printf("%-15s ", "---");
 
         if (rule->dest_ip != NOT_STATED)
         {
             addr.s_addr = rule->dest_ip;
-		    printf("%-15s  ", inet_ntoa(addr));
+		    printf("%-23s ", inet_ntoa(addr));
         }
         else
-            printf("%-18s ", "---");
+            printf("%-23s ", "---");
 		
         if (rule->dest_port != NOT_STATED)
-		    printf("%-18d  ", ntohs(rule->dest_port));
+		    printf("%-23d ", ntohs(rule->dest_port));
         else
-            printf("%-18s ", "---");
+            printf("%-23s ", "---");
 
         if (rule->protocol != NOT_STATED)
         {
@@ -298,7 +297,6 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
             if (comm.rule.dest_ip != NOT_STATED)
                 return DEST_IP_MENTIONED;
 
-            printf("**** %s", optarg);
             if (!inet_aton(optarg, &addr))
                 return INCORRECT_DEST_IP;
 
