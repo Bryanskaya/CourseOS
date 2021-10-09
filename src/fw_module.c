@@ -248,23 +248,96 @@ ssize_t fw_write(struct file *filp, const char __user *buff, size_t count, loff_
 * struct sk_buff *skb - socket buffer
 */
 static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state,
-                            struct list_head *lst)
+                            struct list_head *list_rule)
 {
+    struct iphdr *iph;  /* An IPv4 packet header */
+    struct tcphdr *tcph;
+    struct udphdr *udph;
+    
+    unsigned char protocol;
+    char *protocol_str;
+    uint32_t src_ip, dest_ip;
+    uint16_t src_port, dest_port;
+    
+    struct list_head *lst;
+    struct rule_item *node;
+    struct fw_rule *rule;
 
 
-    return 1;
+    if (!skb || lst->next == lst)
+        return NF_ACCEPT;
+
+    iph = (struct iphdr *)skb_network_header(skb);
+    if (iph == NULL)
+        return NF_ACCEPT;
+
+    protocol = iph->protocol;
+    src_ip = iph->saddr;
+    dest_ip = iph->daddr;
+
+    if (protocol == IPPROTO_UDP)
+    {
+        udph = (struct udphdr *)(skb_transport_header(skb));
+        src_port = udph->source;
+        dest_port = udph->dest;
+        protocol_str = "UDP";
+    }
+    else if (protocol == IPPROTO_UDP)
+    {
+        tcph = (struct tcphdr *)(skb_transport_header(skb));
+        src_port = tcph->source;
+        dest_port = tcph->dest;
+        protocol_str = "TCP";
+    }
+    else
+        return NF_ACCEPT;
+
+    lst = list_rule;
+    list_for_each_entry(node, lst, list)
+    {
+        rule = &node->rule;
+
+        if (rule->protocol != NOT_STATED && rule->protocol != iph->protocol)
+            continue;
+
+        if (rule->src_ip != NOT_STATED && rule->src_ip != iph->protocol)
+            continue; // TODO
+
+        if (rule->src_port != NOT_STATED && rule->src_port != src_port)
+            continue;
+        
+        if (rule->dest_ip != NOT_STATED && rule->dest_ip != iph->protocol)
+            continue; // TODO
+
+        if (rule->dest_port != NOT_STATED && rule->dest_port != dest_port)
+            continue;
+
+        printk(KERN_INFO ">>> FIREWALL: packet was dropped. Details: "
+                "src_ip: %d.%d.%d.%d \t "
+                "src_port: %d \t "
+                "dest_ip: %d.%d.%d.%d \t "
+                "dest_port: %d \t "
+                "protocol: %s", 
+                IP_POS(src_ip, 3), IP_POS(src_ip, 2), IP_POS(src_ip, 1), IP_POS(src_ip, 0),
+                src_port,
+                IP_POS(dest_ip, 3), IP_POS(dest_ip, 2), IP_POS(dest_ip, 1), IP_POS(dest_ip, 0),
+                dest_port,
+                protocol_str);
+
+        return NF_DROP; /* discarded the packet */
+    }
+
+    return NF_ACCEPT;   /* the packet passes, continue iterations */
 }
 
 static unsigned int fw_in_filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
 {
-    return 1;
-    //return filter(priv, skb, state, &in_list);
+    return filter(priv, skb, state, &in_list);
 }
 
 static unsigned int fw_out_filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
 {
-    return 1;
-    //return filter(priv, skb, state, &out_list);
+    return filter(priv, skb, state, &out_list);
 }
 
 static struct file_operations fw_fops = {
