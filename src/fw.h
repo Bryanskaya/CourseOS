@@ -15,16 +15,16 @@ struct fw_rule
     u_int32_t in;
     
     u_int32_t src_ip;
-    u_int32_t src_mask;
+    /*u_int32_t src_mask;*/
     u_int16_t src_port;
     
     u_int32_t dest_ip;
-    u_int32_t dest_mask; /*mask нужна ли*/
+    /*u_int32_t dest_mask;*/ /*mask нужна ли*/
     u_int32_t dest_port;
 
     u_int8_t protocol;
 
-    u_int8_t index;
+    /*u_int8_t index;*/
 };
 
 enum fw_action 

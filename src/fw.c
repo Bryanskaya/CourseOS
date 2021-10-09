@@ -22,21 +22,22 @@
 void show_info()
 {
     printf("\n"
-            "-a --add \t\t Add the rule\n"
-            "-d --delete INDEX \t Delete the rule having index = INDEX\n"
-            "-A --all \t\t Show all the rules\n"
+            "-a --add RULE \t\t\t Add the rule\n"
+            "-d --delete RULE \t\t Delete the rule\n"
             "\n"
-            "-i --in \t\t Input\n"
-            "-o --out \t\t Output\n"
-            "-p --protocol PROTOCOL \t Protocol = {TCP, UDP}\n"
+            "Parameters:\n"
+            "  -i --in \t\t\t Input\n"
+            "  -o --out \t\t\t Output\n"
+            "  -p --protocol PROTOCOL \t Protocol = {TCP, UDP}\n"
             "\n"
-            "   --src_ip IP \t\t Source IP\n"
-            "   --src_port PORT \t Source port\n"
+            "     --src_ip IP \t\t Source IP\n"
+            "     --src_port PORT \t\t Source port\n"
             "\n"
-            "   --dest_ip IP \t Destination IP\n"
-            "   --dest_port PORT \t Destinamtion port\n"
+            "     --dest_ip IP \t\t Destination IP\n"
+            "     --dest_port PORT \t\t Destinamtion port\n"
             "\n"
-            "-h --help \t\t Available commands\n\n");
+            "-A --all \t\t\t Show all the rules\n"
+            "-h --help \t\t\t Available commands\n\n");
 }
 
 /*
@@ -148,14 +149,14 @@ void init_comm(struct fw_comm *comm)
     comm->action = NONE;
     comm->rule.in = NOT_STATED;
     comm->rule.src_ip = NOT_STATED;
-    comm->rule.src_mask = NOT_STATED; /*TODO*/
+    /*comm->rule.src_mask = NOT_STATED;*/ /*TODO*/
     comm->rule.src_port = NOT_STATED;
     comm->rule.dest_ip = NOT_STATED;
-    comm->rule.dest_mask = NOT_STATED;
+    /*comm->rule.dest_mask = NOT_STATED;*/
     comm->rule.dest_port = NOT_STATED;
     comm->rule.protocol = NOT_STATED;
 
-    comm->rule.index = NOT_STATED;
+    /*comm->rule.index = NOT_STATED;*/
 }
 
 /*
@@ -207,7 +208,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
     struct option long_comm[] = 
     {
         {"add", no_argument, 0, 'a'},
-        {"delete", required_argument, 0, 'd'},
+        {"delete", no_argument, 0, 'd'},
         {"all", no_argument, 0, 'A'},
         {"in", no_argument, 0, 'i'},
         {"out", no_argument, 0, 'o'},
@@ -244,11 +245,11 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
 
             comm.action = DELETE;
 
-            param = parse_add_arg(optarg, 0, USHRT_MAX);
+            /*param = parse_add_arg(optarg, 0, USHRT_MAX);
             if (param == EXIT_FAILURE)
                 return INCORRECT_INDEX_RULE;
 
-            comm.rule.index = param;
+            comm.rule.index = param;*/
             break;
 
         case 'A':
@@ -334,7 +335,8 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
     if (comm.action == NONE)
         return ACTION_NOT_MENTIONED;
 
-    if (comm.action == DELETE || comm.action == SHOW)
+    //if (comm.action == DELETE || comm.action == SHOW)
+    if (comm.action == SHOW)
     {
         *res_comm = comm;
         return EXIT_SUCCESS;
@@ -345,7 +347,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
 
     if (comm.rule.src_ip == NOT_STATED && comm.rule.src_port == NOT_STATED && \
         comm.rule.dest_ip == NOT_STATED && comm.rule.dest_port == NOT_STATED && \
-        comm.rule.protocol == NOT_STATED && comm.rule.index == NOT_STATED)
+        comm.rule.protocol == NOT_STATED/* && comm.rule.index == NOT_STATED*/)
         return KEYS_NOT_MENTIONED;
 
     *res_comm = comm;
@@ -442,7 +444,6 @@ int main(int argc, char *argv[])
                     printf("ERROR: operation was failed.\n");
                     break;
                 case EXIT_SUCCESS:
-                    printf("Rule was successfully added.\n");
                     break;
                 default:
                     break;
@@ -466,6 +467,5 @@ int main(int argc, char *argv[])
             break;
     }
     
-
     return EXIT_SUCCESS;
 }

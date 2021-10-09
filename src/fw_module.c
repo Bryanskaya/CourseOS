@@ -83,7 +83,7 @@ char* str_rule(struct fw_rule *rule)
         count_bytes += snprintf(res, 10, "OUT \t ");
 
     if (rule->src_ip != NOT_STATED)
-        count_bytes = snprintf(res, 30, "scp_ip: %u.%u.%u.%u \t ", 
+        count_bytes = snprintf(res, 30, "src_ip: %u.%u.%u.%u \t ", 
                                         IP_POS(rule->src_ip, 3), 
                                         IP_POS(rule->src_ip, 2),
                                         IP_POS(rule->src_ip, 1),
@@ -116,9 +116,11 @@ char* str_rule(struct fw_rule *rule)
 
 static void add_rule(struct fw_rule *rule)
 {
-    printk(KERN_INFO ">>> FIREWALL: func add rule was called");
+    struct rule_item *node;
 
-    struct rule_item *node = (struct rule_item *)kmalloc(sizeof(struct rule_item), GFP_KERNEL);
+    printk(KERN_INFO ">>> FIREWALL: func add rule was called");
+   
+    node = (struct rule_item *)kmalloc(sizeof(struct rule_item), GFP_KERNEL);
     if (node == NULL)
     {
         printk(KERN_INFO ">>> FIREWALL: addition a new rule was failed");
@@ -137,22 +139,35 @@ static void add_rule(struct fw_rule *rule)
 
 static void del_rule(struct fw_rule *rule)
 {
-    struct list_head *lst;
+    struct list_head *lst, *temp;
     struct rule_item *node;
 
-    printk(KERN_INFO ">>> Delete rule was called");
-
-    /*if (rule->in == IN)
+    if (rule->in == IN)
         lst = &in_list;
     else
         lst = &out_list;
 
-    for (list_head *temp = lst; temp->next != lst; temp = temp->next)
+    for (temp = lst; temp->next != lst; temp = temp->next)
     {
         node = list_entry(temp->next, struct rule_item, list);
-    }*/
 
-    // TODO
+        if (node->rule.in == rule->in &&
+            node->rule.src_ip == rule->src_ip &&
+            node->rule.src_port == rule->src_port &&
+            node->rule.dest_ip == rule->dest_ip &&
+            node->rule.dest_port == rule->dest_port &&
+            node->rule.protocol == rule->protocol)
+            {
+                list_del(temp->next);
+                kfree(node);
+
+                printk(KERN_INFO ">>> FIREWALL: rule was removed. Rule: %s", str_rule(rule));
+
+                break;
+            }
+    }
+
+    printk(KERN_INFO ">>> FIREWALL: rule was not found. Rule: %s", str_rule(rule));
 }
 
 
@@ -220,7 +235,6 @@ ssize_t fw_write(struct file *filp, const char __user *buff, size_t count, loff_
     case DELETE:
         del_rule(&rule_full.rule);
         break;
-    
     default:
         printk(KERN_INFO ">>> FIREWALL: unknown command");
         break;
@@ -229,16 +243,18 @@ ssize_t fw_write(struct file *filp, const char __user *buff, size_t count, loff_
     return 0;
 }
 
+
 /*
-static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+* struct sk_buff *skb - socket buffer
+*/
+static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state,
+                            struct list_head *lst)
 {
 
 
     return 1;
-}*/
-/*
-* struct sk_buff *skb - socket buffer
-*/
+}
+
 static unsigned int fw_in_filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
 {
     return 1;
