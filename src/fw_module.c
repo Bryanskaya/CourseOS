@@ -267,32 +267,47 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
     if (!skb || lst->next == lst)
         return NF_ACCEPT;
 
-    iph = (struct iphdr *)skb_network_header(skb);
+    printk(KERN_INFO "%s", skb)
+
+    return NF_ACCEPT;   /* the packet passes, continue iterations */
+}
+
+    /*iph = (struct iphdr *)skb_network_header(skb);
     if (iph == NULL)
+    {
+        printk(KERN_INFO "*** iph == NULL");
         return NF_ACCEPT;
+    }
+    printk(KERN_INFO "*** Before if %s", iph->protocol);
 
     protocol = iph->protocol;
     src_ip = iph->saddr;
     dest_ip = iph->daddr;
 
-    if (protocol == IPPROTO_UDP)
+    printk(KERN_INFO "*** Before if %s", iph->protocol);
+
+    /*if (protocol == IPPROTO_UDP)
     {
-        udph = (struct udphdr *)(skb_transport_header(skb));
+        printk(KERN_INFO "*** UDP");
+    /*    udph = (struct udphdr *)(skb_transport_header(skb));
         src_port = udph->source;
         dest_port = udph->dest;
-        protocol_str = "UDP";
-    }
-    else if (protocol == IPPROTO_UDP)
+        protocol_str = "UDP";*/
+    /*}
+    else if (protocol == IPPROTO_TCP)
     {
-        tcph = (struct tcphdr *)(skb_transport_header(skb));
+        printk(KERN_INFO "*** TCP");
+        /*tcph = (struct tcphdr *)(skb_transport_header(skb));
         src_port = tcph->source;
         dest_port = tcph->dest;
-        protocol_str = "TCP";
-    }
+        protocol_str = "TCP";*/
+    /*}
     else
         return NF_ACCEPT;
 
-    lst = list_rule;
+    printk(KERN_INFO "%d", iph->protocol);
+
+    /*lst = list_rule;
     list_for_each_entry(node, lst, list)
     {
         rule = &node->rule;
@@ -325,10 +340,10 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
                 protocol_str);
 
         return NF_DROP; /* discarded the packet */
-    }
+    //}
 
-    return NF_ACCEPT;   /* the packet passes, continue iterations */
-}
+    /*return NF_ACCEPT;   /* the packet passes, continue iterations */
+/*}*/
 
 static unsigned int fw_in_filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
 {
@@ -355,7 +370,7 @@ struct miscdevice dev = {
     .mode = S_IRWXU | S_IWGRP | S_IWOTH | S_IROTH,
 };
 
-struct nf_hook_ops fw_in_hook_ops = 
+static struct nf_hook_ops fw_in_hook_ops = 
 {
     .hook = fw_in_filter,
     .pf = PF_INET,
@@ -363,7 +378,7 @@ struct nf_hook_ops fw_in_hook_ops =
     .priority = NF_IP_PRI_FIRST
 };
 
-struct nf_hook_ops fw_out_hook_ops = 
+static struct nf_hook_ops fw_out_hook_ops = 
 {
     .hook = fw_out_filter,
     .pf = PF_INET,
@@ -393,6 +408,9 @@ static int __init fw_init(void)
     INIT_LIST_HEAD(&in_list);
     INIT_LIST_HEAD(&out_list);
 
+    nf_register_net_hook(&init_net, &fw_in_hook_ops);
+    nf_register_net_hook(&init_net, &fw_out_hook_ops);
+
     printk(KERN_INFO ">>> FIREWALL was loaded. Major number of char device %s is 10, minor is %d",
             DEVICE_FNAME, dev.minor);
 
@@ -420,6 +438,9 @@ static void __exit fw_exit(void)
     }
 
     misc_deregister(&dev);
+
+    nf_unregister_net_hook(&init_net, &fw_in_hook_ops);
+    nf_unregister_net_hook(&init_net, &fw_out_hook_ops);
 
     printk(KERN_INFO ">>> FIREWALL unloaded!\n");
 }
