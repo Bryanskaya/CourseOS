@@ -258,56 +258,42 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
     char *protocol_str;
     uint32_t src_ip, dest_ip;
     uint16_t src_port, dest_port;
-    
+
     struct list_head *lst;
     struct rule_item *node;
     struct fw_rule *rule;
 
-
-    if (!skb || lst->next == lst)
+    if (!skb || list_rule->next == list_rule)
         return NF_ACCEPT;
 
-    printk(KERN_INFO "%s", skb)
-
-    return NF_ACCEPT;   /* the packet passes, continue iterations */
-}
-
-    /*iph = (struct iphdr *)skb_network_header(skb);
+    iph = (struct iphdr *)skb_network_header(skb);
     if (iph == NULL)
-    {
-        printk(KERN_INFO "*** iph == NULL");
         return NF_ACCEPT;
-    }
-    printk(KERN_INFO "*** Before if %s", iph->protocol);
 
     protocol = iph->protocol;
     src_ip = iph->saddr;
     dest_ip = iph->daddr;
 
-    printk(KERN_INFO "*** Before if %s", iph->protocol);
-
-    /*if (protocol == IPPROTO_UDP)
+    if (protocol == IPPROTO_UDP)
     {
-        printk(KERN_INFO "*** UDP");
-    /*    udph = (struct udphdr *)(skb_transport_header(skb));
+        udph = (struct udphdr *)(skb_transport_header(skb));
         src_port = udph->source;
         dest_port = udph->dest;
-        protocol_str = "UDP";*/
-    /*}
+        protocol_str = "UDP";
+    }
     else if (protocol == IPPROTO_TCP)
     {
-        printk(KERN_INFO "*** TCP");
-        /*tcph = (struct tcphdr *)(skb_transport_header(skb));
+        tcph = (struct tcphdr *)(skb_transport_header(skb));
         src_port = tcph->source;
         dest_port = tcph->dest;
-        protocol_str = "TCP";*/
-    /*}
+        protocol_str = "TCP";
+    }
     else
         return NF_ACCEPT;
 
     printk(KERN_INFO "%d", iph->protocol);
 
-    /*lst = list_rule;
+    lst = list_rule;
     list_for_each_entry(node, lst, list)
     {
         rule = &node->rule;
@@ -315,14 +301,14 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
         if (rule->protocol != NOT_STATED && rule->protocol != iph->protocol)
             continue;
 
-        if (rule->src_ip != NOT_STATED && rule->src_ip != iph->protocol)
-            continue; // TODO
+        /*if (rule->src_ip != NOT_STATED && rule->src_ip != iph->protocol)
+            continue;*/ // TODO
 
         if (rule->src_port != NOT_STATED && rule->src_port != src_port)
             continue;
         
-        if (rule->dest_ip != NOT_STATED && rule->dest_ip != iph->protocol)
-            continue; // TODO
+        /*if (rule->dest_ip != NOT_STATED && rule->dest_ip != iph->protocol)
+            continue; */// TODO
 
         if (rule->dest_port != NOT_STATED && rule->dest_port != dest_port)
             continue;
@@ -340,10 +326,10 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
                 protocol_str);
 
         return NF_DROP; /* discarded the packet */
-    //}
+    }
 
-    /*return NF_ACCEPT;   /* the packet passes, continue iterations */
-/*}*/
+    return NF_ACCEPT;   /* the packet passes, continue iterations */
+}
 
 static unsigned int fw_in_filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
 {
