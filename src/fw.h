@@ -23,8 +23,6 @@ struct fw_rule
     u_int32_t dest_port;
 
     u_int8_t protocol;
-
-    /*u_int8_t index;*/
 };
 
 enum fw_action 

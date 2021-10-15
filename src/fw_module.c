@@ -30,11 +30,9 @@
 #define DEVICE_MAJOR_NUMBER     100
 #define BUF_LEN                 200
 
-/*#define IPPROTO_TCP             6
-#define IPPROTO_UDP             17*/
-
 
 #define IP_POS(ip, pos) (ip >> ((8 * (3 - pos))) & 0xFF)
+#define SAME_ADDR(ip1, ip2) ((ip1 ^ ip2) == 0)
 
 
 MODULE_LICENSE("GPL");
@@ -291,8 +289,6 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
     else
         return NF_ACCEPT;
 
-    printk(KERN_INFO "%d", iph->protocol);
-
     lst = list_rule;
     list_for_each_entry(node, lst, list)
     {
@@ -301,14 +297,14 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
         if (rule->protocol != NOT_STATED && rule->protocol != iph->protocol)
             continue;
 
-        /*if (rule->src_ip != NOT_STATED && rule->src_ip != iph->protocol)
-            continue;*/ // TODO
+        if (rule->src_ip != NOT_STATED && !SAME_ADDR(rule->src_ip, src_ip))
+            continue;
 
         if (rule->src_port != NOT_STATED && rule->src_port != src_port)
             continue;
         
-        /*if (rule->dest_ip != NOT_STATED && rule->dest_ip != iph->protocol)
-            continue; */// TODO
+        if (rule->dest_ip != NOT_STATED && !SAME_ADDR(rule->dest_ip, dest_ip))
+            continue;
 
         if (rule->dest_port != NOT_STATED && rule->dest_port != dest_port)
             continue;
@@ -415,12 +411,15 @@ static void __exit fw_exit(void)
     {
         list_del(&node->list);
         kfree(node);
+        printk(KERN_INFO ">>> FIREWALL: rule was removed. Rule: %s", str_rule(&(node->rule)));
+
     }
 
     list_for_each_entry_safe(node, node_temp, &out_list, list)
     {
         list_del(&node->list);
         kfree(node);
+        printk(KERN_INFO ">>> FIREWALL: rule was removed. Rule: %s", str_rule(&(node->rule)));
     }
 
     misc_deregister(&dev);
