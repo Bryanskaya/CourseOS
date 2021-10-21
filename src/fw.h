@@ -30,6 +30,8 @@ enum fw_action
     ADD = 1,
     DELETE = 2,
     SHOW = 3,
+    HIDE = 4,
+    UNHIDE = 5,
     NONE = 0
 };
 

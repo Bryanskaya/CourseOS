@@ -218,6 +218,8 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
         {"dest_ip", required_argument, 0, 't'},
         {"dest_port", required_argument, 0, 'e'},
         {"help", no_argument, 0, 'h'},
+        {"hide", no_argument, 0, '1'},
+        {"unhide", no_argument, 0, '0'},
         {NULL, 0, NULL, 0}
     };
     
@@ -244,12 +246,6 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
                 return ACTION_MENTIONED;
 
             comm.action = DELETE;
-
-            /*param = parse_add_arg(optarg, 0, USHRT_MAX);
-            if (param == EXIT_FAILURE)
-                return INCORRECT_INDEX_RULE;
-
-            comm.rule.index = param;*/
             break;
 
         case 'A':
@@ -325,6 +321,20 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
 
             comm.rule.dest_port = htons((uint16_t)param);
             break;
+
+        case '1':
+            if (comm.action != NONE)
+                return ACTION_MENTIONED;
+
+            comm.action = HIDE;
+            break;
+        
+        case '0':
+            if (comm.action != NONE)
+                return ACTION_MENTIONED;
+
+            comm.action = UNHIDE;
+            break;
         
         default:
             show_info();
@@ -335,8 +345,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
     if (comm.action == NONE)
         return ACTION_NOT_MENTIONED;
 
-    //if (comm.action == DELETE || comm.action == SHOW)
-    if (comm.action == SHOW)
+    if (comm.action == SHOW || comm.action == HIDE || comm.action == UNHIDE)
     {
         *res_comm = comm;
         return EXIT_SUCCESS;
@@ -347,7 +356,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
 
     if (comm.rule.src_ip == NOT_STATED && comm.rule.src_port == NOT_STATED && \
         comm.rule.dest_ip == NOT_STATED && comm.rule.dest_port == NOT_STATED && \
-        comm.rule.protocol == NOT_STATED/* && comm.rule.index == NOT_STATED*/)
+        comm.rule.protocol == NOT_STATED)
         return KEYS_NOT_MENTIONED;
 
     *res_comm = comm;
@@ -433,6 +442,8 @@ int main(int argc, char *argv[])
     {
         case ADD:
         case DELETE:
+        case HIDE:
+        case UNHIDE:
             res = write_rule(&comm);
 
             switch (res)
