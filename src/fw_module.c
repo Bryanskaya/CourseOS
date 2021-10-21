@@ -255,11 +255,13 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
     unsigned char protocol;
     char *protocol_str;
     uint32_t src_ip, dest_ip;
-    uint16_t src_port, dest_port;
+    uint16_t src_port = NOT_STATED, dest_port = NOT_STATED;
 
     struct list_head *lst;
     struct rule_item *node;
     struct fw_rule *rule;
+
+    //printk(KERN_INFO ">>> FIREWALL: packet was detected");
 
     if (!skb || list_rule->next == list_rule)
         return NF_ACCEPT;
@@ -287,7 +289,7 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
         protocol_str = "TCP";
     }
     else
-        return NF_ACCEPT;
+        protocol_str = "-";
 
     lst = list_rule;
     list_for_each_entry(node, lst, list)
@@ -300,13 +302,13 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
         if (rule->src_ip != NOT_STATED && !SAME_ADDR(rule->src_ip, src_ip))
             continue;
 
-        if (rule->src_port != NOT_STATED && rule->src_port != src_port)
+        if (rule->src_port != NOT_STATED && src_port != NOT_STATED && rule->src_port != src_port)
             continue;
         
         if (rule->dest_ip != NOT_STATED && !SAME_ADDR(rule->dest_ip, dest_ip))
             continue;
 
-        if (rule->dest_port != NOT_STATED && rule->dest_port != dest_port)
+        if (rule->dest_port != NOT_STATED && dest_port != NOT_STATED && rule->dest_port != dest_port)
             continue;
 
         printk(KERN_INFO ">>> FIREWALL: packet was dropped. Details: "

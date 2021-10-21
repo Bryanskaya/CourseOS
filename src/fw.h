@@ -4,7 +4,7 @@
 
 #define IN          1
 #define OUT         2
-#define NOT_STATED  100
+#define NOT_STATED  10 /* Because there is no such tcp/udp port + define for protocols */
 
 #define DEVICE_FNAME            "fw_file"
 #define DEVICE_CLASS            "fw_class"
