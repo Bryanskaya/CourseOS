@@ -155,8 +155,6 @@ void init_comm(struct fw_comm *comm)
     /*comm->rule.dest_mask = NOT_STATED;*/
     comm->rule.dest_port = NOT_STATED;
     comm->rule.protocol = NOT_STATED;
-
-    /*comm->rule.index = NOT_STATED;*/
 }
 
 /*
@@ -195,7 +193,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
 {
     int res, comm_ind, protocol;
     int64_t param;
-    const char* short_comm = "ad:Aiop:s:r:t:e:h";
+    const char* short_comm = "ad:Aiop:s:r:t:e:h10";
     struct in_addr addr;
     struct fw_comm comm;
 

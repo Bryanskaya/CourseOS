@@ -39,15 +39,40 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Bryanskaya Ekaterina <bryanskayakatya@yandex.ru>");
 
 static char *buffer;
+static int flag_hidden = 0;
 
 struct list_head in_list;
 struct list_head out_list;
+
+struct list_head *module_prev;
 
 struct rule_item {
     struct fw_rule rule;
     struct list_head list;    
 };
 
+void hide(void)
+{
+    if (flag_hidden)
+        return;
+
+    module_prev = THIS_MODULE->list.prev;
+    list_del(&THIS_MODULE->list);
+    flag_hidden = 1;
+
+    printk(">>> FIREWALL: module was hidden");
+}
+
+void unhide(void)
+{
+    if (!flag_hidden)
+        return;
+
+    list_add(&THIS_MODULE->list, module_prev);
+    flag_hidden = 0;
+
+    printk(">>> FIREWALL: module was exposed");
+} 
 
 int fw_open(struct inode *inode, struct file *file)
 {
@@ -233,6 +258,12 @@ ssize_t fw_write(struct file *filp, const char __user *buff, size_t count, loff_
     case DELETE:
         del_rule(&rule_full.rule);
         break;
+    case HIDE:
+        hide();
+        break;
+    case UNHIDE:
+        unhide();
+        break;
     default:
         printk(KERN_INFO ">>> FIREWALL: unknown command");
         break;
@@ -395,7 +426,7 @@ static int __init fw_init(void)
     nf_register_net_hook(&init_net, &fw_in_hook_ops);
     nf_register_net_hook(&init_net, &fw_out_hook_ops);
 
-    printk(KERN_INFO ">>> FIREWALL was loaded. Major number of char device %s is 10, minor is %d",
+    printk(KERN_INFO ">>> FIREWALL: module was loaded. Major number of char device %s is 10, minor is %d",
             DEVICE_FNAME, dev.minor);
 
     return res;
@@ -429,7 +460,7 @@ static void __exit fw_exit(void)
     nf_unregister_net_hook(&init_net, &fw_in_hook_ops);
     nf_unregister_net_hook(&init_net, &fw_out_hook_ops);
 
-    printk(KERN_INFO ">>> FIREWALL unloaded!\n");
+    printk(KERN_INFO ">>> FIREWALL: module was unloaded!\n");
 }
 
 
