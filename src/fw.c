@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 #include <limits.h>
 #include <string.h>
 #include <fcntl.h>
@@ -367,6 +368,29 @@ int main(int argc, char *argv[])
 {
     struct fw_comm comm;
     int res;
+
+    struct hostent* host = NULL;
+    host = gethostbyname("vk.com");
+    int len = 0;
+	int IPCNT = 0; // количество IP
+	int pos = 0;
+	char tmpIp[64];
+    char ipList[128] = {0};	
+    memset(ipList, 0, sizeof(128));
+    for (int i = 0; host->h_addr_list[i] != NULL; i++)
+    {
+        memset(tmpIp, 0, sizeof(tmpIp));
+		inet_ntop(host->h_addrtype, host->h_addr_list[i], tmpIp, 64);
+		len = strlen(tmpIp);
+		if(len>0 && pos<127)
+		{
+			strcpy(&ipList[pos], tmpIp);			
+			pos += len;
+			ipList[pos++] = ' ';
+		}
+    }
+
+    printf("All ip:%s\n", ipList);
 
     res = parse_comm(argc, argv, &comm);
 
