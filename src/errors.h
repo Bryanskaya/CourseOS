@@ -21,11 +21,12 @@
 #define KEYS_NOT_MENTIONED          2010
 
 
-#define INCORRECT_SCR_IP            3000
+#define INCORRECT_SRC_IP            3000
 #define INCORRECT_DEST_IP           3001
 #define INCORRECT_SRC_PORT          3002
 #define INCORRECT_DEST_PORT         3003
 #define INCORRECT_INDEX_RULE        3004
+#define INCORRECT_DOMAIN            3005
 
 
 
