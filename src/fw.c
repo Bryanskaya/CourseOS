@@ -13,8 +13,14 @@
 #include "fw.h"
 
 
-#define TCP_PROTOCOL "TCP"
-#define UDP_PROTOCOL "UDP"
+#define TCP_PROTOCOL    "TCP"
+#define UDP_PROTOCOL    "UDP"
+
+#define SRC             1
+#define DEST            2
+
+char src_ip_arr[64][INET_ADDRSTRLEN];
+char dest_ip_arr[64][INET_ADDRSTRLEN];
 
 
 /*
@@ -33,9 +39,11 @@ void show_info()
             "\n"
             "     --src_ip IP \t\t Source IP\n"
             "     --src_port PORT \t\t Source port\n"
+            "     --src_domain DOMAIN \t Source domain name\n"
             "\n"
             "     --dest_ip IP \t\t Destination IP\n"
-            "     --dest_port PORT \t\t Destinamtion port\n"
+            "     --dest_port PORT \t\t Destination port\n"
+            "     --dest_domain DOMAIN \t Destination domain name\n"
             "\n"
             "-A --all \t\t\t Show all the rules\n"
             "-h --help \t\t\t Available commands\n\n");
@@ -47,6 +55,7 @@ void show_info()
 void print_head()
 {
     printf("IN/OUT \t source address \t source port \t destination address \t destination port \t protocol\n");
+
     for (int i = 0; i < 110; i++)
         printf("¯");
     printf("\n");
@@ -188,13 +197,42 @@ int parse_add_prot(const char *protocol)
 }
 
 /*
+* Function to get array of ip from domain name.
+*/
+int get_ip_from_domain(const char *str, int flag)
+{
+    struct hostent* host = NULL;
+    char tmpIp[INET_ADDRSTRLEN];
+
+    host = gethostbyname(str);
+    if (host == NULL)
+        return INCORRECT_DOMAIN;
+
+    for (int i = 0; host->h_addr_list[i] != NULL; i++)
+    {
+        memset(tmpIp, 0, sizeof(tmpIp));
+        inet_ntop(host->h_addrtype, host->h_addr_list[i], tmpIp, INET_ADDRSTRLEN);
+
+        if (strlen(tmpIp) > 0)
+        {
+            if (flag == SRC)
+                strcpy(src_ip_arr[i], tmpIp);
+            else if (flag == DEST)
+                strcpy(dest_ip_arr[i], tmpIp);
+        }
+    }
+
+    return EXIT_SUCCESS;
+}
+
+/*
 * Function to get params from console
 */
 int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
 {
     int res, comm_ind, protocol;
     int64_t param;
-    const char* short_comm = "ad:Aiop:s:r:t:e:h10";
+    const char* short_comm = "ad:Aiop:s:r:m:t:e:M:h10";
     struct in_addr addr;
     struct fw_comm comm;
 
@@ -214,8 +252,10 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
         {"protocol", required_argument, 0, 'p'},
         {"src_ip", required_argument, 0, 's'},
         {"src_port", required_argument, 0, 'r'},
+        {"src_domain", required_argument, 0, 'm'},
         {"dest_ip", required_argument, 0, 't'},
         {"dest_port", required_argument, 0, 'e'},
+        {"dest_domain", required_argument, 0, 'M'},
         {"help", no_argument, 0, 'h'},
         {"hide", no_argument, 0, '1'},
         {"unhide", no_argument, 0, '0'},
@@ -284,7 +324,7 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
                 return SRC_IP_MENTIONED;
 
             if (!inet_aton(optarg, &addr))
-                return INCORRECT_SCR_IP;
+                return INCORRECT_SRC_IP;
 
             comm.rule.src_ip = addr.s_addr;
             break;
@@ -308,6 +348,38 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
                 return INCORRECT_SRC_PORT;
 
             comm.rule.src_port = htons((uint16_t)param);
+            break;
+
+        case 'm':
+            if (comm.rule.src_ip != NOT_STATED)
+                return SRC_IP_MENTIONED;
+            
+            param = get_ip_from_domain(optarg, SRC);
+            if (param == INCORRECT_DOMAIN)
+                return INCORRECT_DOMAIN;
+
+            if (!inet_aton(src_ip_arr[0], &addr))
+                return INCORRECT_DEST_IP;
+
+            comm.rule.src_ip = addr.s_addr;
+            strcpy(src_ip_arr[0], "");
+
+            break;
+
+        case 'M':
+            if (comm.rule.dest_ip != NOT_STATED)
+                return DEST_IP_MENTIONED;
+            
+            param = get_ip_from_domain(optarg, DEST);
+            if (param == INCORRECT_DOMAIN)
+                return INCORRECT_DOMAIN;
+
+            if (!inet_aton(dest_ip_arr[0], &addr))
+                return INCORRECT_DEST_IP;
+
+            comm.rule.dest_ip = addr.s_addr;
+            strcpy(dest_ip_arr[0], "");
+
             break;
 
         case 'e':
@@ -367,30 +439,15 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
 int main(int argc, char *argv[])
 {
     struct fw_comm comm;
-    int res;
+    struct in_addr addr;
+    int res, i_src = 1, i_dest = 1;
 
-    struct hostent* host = NULL;
-    host = gethostbyname("vk.com");
-    int len = 0;
-	int IPCNT = 0; // количество IP
-	int pos = 0;
-	char tmpIp[64];
-    char ipList[128] = {0};	
-    memset(ipList, 0, sizeof(128));
-    for (int i = 0; host->h_addr_list[i] != NULL; i++)
-    {
-        memset(tmpIp, 0, sizeof(tmpIp));
-		inet_ntop(host->h_addrtype, host->h_addr_list[i], tmpIp, 64);
-		len = strlen(tmpIp);
-		if(len>0 && pos<127)
-		{
-			strcpy(&ipList[pos], tmpIp);			
-			pos += len;
-			ipList[pos++] = ' ';
-		}
-    }
+    /*const char del[15] = "com";
 
-    printf("All ip:%s\n", ipList);
+    res = get_ip_from_domain(del, SRC);
+
+    for (int i = 0; i < strlen(*src_ip_arr) && strcmp(src_ip_arr[i], ""); i++)
+        printf("%s\n", src_ip_arr[i]);*/
 
     res = parse_comm(argc, argv, &comm);
 
@@ -416,7 +473,7 @@ int main(int argc, char *argv[])
         case SRC_IP_MENTIONED:
             printf("ERROR: source IP is already mentioned\n");
             break;
-        case INCORRECT_SCR_IP:
+        case INCORRECT_SRC_IP:
             printf("ERROR: incorrect source IP\n");
             break;
         case DEST_IP_MENTIONED:
@@ -449,9 +506,9 @@ int main(int argc, char *argv[])
         case KEYS_NOT_MENTIONED:
             printf("ERROR: keys are not mentioned\n");
             break;
-        /*case :
-
-            break;*/
+        case INCORRECT_DOMAIN:
+            printf("ERROR: domain name is wrong\n");
+            break;
         
         default:
             break;
@@ -460,45 +517,75 @@ int main(int argc, char *argv[])
         return res;
     }
         
-    switch (comm.action)
+    do
     {
-        case ADD:
-        case DELETE:
-        case HIDE:
-        case UNHIDE:
-            res = write_rule(&comm);
+        for (int i = 0; i < strlen(*src_ip_arr) && strcmp(src_ip_arr[i], ""); i++)
+            printf("%s\n", src_ip_arr[i]);
 
-            switch (res)
-            {
-                case DEVICE_NOT_AVAILABLE:
-                    printf("ERROR: denied access to the device\n");
-                    break;
-                case RULE_ADDITION_FAILED:
-                    printf("ERROR: operation was failed.\n");
-                    break;
-                case EXIT_SUCCESS:
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case SHOW:
-            res = show_rules();
+        switch (comm.action)
+        {
+            case ADD:
+            case DELETE:
+            case HIDE:
+            case UNHIDE:
+                res = write_rule(&comm);
 
-            switch (res)
-            {
-                case DEVICE_NOT_AVAILABLE:
-                    printf("ERROR: denied access to the device\n");
-                    break;
-                case MEMORY_ERROR:
-                    printf("ERROR: problems with memory allocation");
-                    break;
-                
-                default:
-                    break;
-            }
+                switch (res)
+                {
+                    case DEVICE_NOT_AVAILABLE:
+                        printf("ERROR: denied access to the device\n");
+                        break;
+                    case RULE_ADDITION_FAILED:
+                        printf("ERROR: operation was failed.\n");
+                        break;
+                    case EXIT_SUCCESS:
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case SHOW:
+                res = show_rules();
+
+                switch (res)
+                {
+                    case DEVICE_NOT_AVAILABLE:
+                        printf("ERROR: denied access to the device\n");
+                        break;
+                    case MEMORY_ERROR:
+                        printf("ERROR: problems with memory allocation");
+                        break;
+                    
+                    default:
+                        break;
+                }
+                break;
+        }
+
+        if (strcmp(src_ip_arr[i_src], ""))
+        {
+            if (!inet_aton(src_ip_arr[i_src], &addr))
+                return INCORRECT_SRC_IP;
+
+            comm.rule.src_ip = addr.s_addr;
+
+            strcpy(src_ip_arr[i_src], "");
+            i_src++;
+        }
+        else if (strcmp(dest_ip_arr[i_dest], ""))
+        {
+            if (!inet_aton(dest_ip_arr[i_dest], &addr))
+                return INCORRECT_DEST_IP;
+
+            comm.rule.dest_ip = addr.s_addr;
+
+            strcpy(dest_ip_arr[i_dest], "");
+            i_dest++;
+        }
+        else
             break;
-    }
-    
+        
+    } while (1);
+
     return EXIT_SUCCESS;
 }

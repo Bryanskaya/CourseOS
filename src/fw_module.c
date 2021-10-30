@@ -186,7 +186,7 @@ static void del_rule(struct fw_rule *rule)
 
                 printk(KERN_INFO ">>> FIREWALL: rule was removed. Rule: %s", str_rule(rule));
 
-                break;
+                return;
             }
     }
 
