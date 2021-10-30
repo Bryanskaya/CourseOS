@@ -19,8 +19,8 @@
 #define SRC             1
 #define DEST            2
 
-char src_ip_arr[64][INET_ADDRSTRLEN];
-char dest_ip_arr[64][INET_ADDRSTRLEN];
+char ip_arr[64][INET_ADDRSTRLEN];
+int domain_flag = NOT_STATED;
 
 
 /*
@@ -199,7 +199,7 @@ int parse_add_prot(const char *protocol)
 /*
 * Function to get array of ip from domain name.
 */
-int get_ip_from_domain(const char *str, int flag)
+int get_ip_from_domain(const char *str)
 {
     struct hostent* host = NULL;
     char tmpIp[INET_ADDRSTRLEN];
@@ -214,12 +214,7 @@ int get_ip_from_domain(const char *str, int flag)
         inet_ntop(host->h_addrtype, host->h_addr_list[i], tmpIp, INET_ADDRSTRLEN);
 
         if (strlen(tmpIp) > 0)
-        {
-            if (flag == SRC)
-                strcpy(src_ip_arr[i], tmpIp);
-            else if (flag == DEST)
-                strcpy(dest_ip_arr[i], tmpIp);
-        }
+            strcpy(ip_arr[i], tmpIp);
     }
 
     return EXIT_SUCCESS;
@@ -353,32 +348,40 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
         case 'm':
             if (comm.rule.src_ip != NOT_STATED)
                 return SRC_IP_MENTIONED;
+
+            if (domain_flag != NOT_STATED)
+                return DOMAIN_MENTIONED;
             
-            param = get_ip_from_domain(optarg, SRC);
+            param = get_ip_from_domain(optarg);
             if (param == INCORRECT_DOMAIN)
                 return INCORRECT_DOMAIN;
 
-            if (!inet_aton(src_ip_arr[0], &addr))
+            if (!inet_aton(ip_arr[0], &addr))
                 return INCORRECT_DEST_IP;
 
             comm.rule.src_ip = addr.s_addr;
-            strcpy(src_ip_arr[0], "");
+            strcpy(ip_arr[0], "");
+            domain_flag = SRC;
 
             break;
 
         case 'M':
             if (comm.rule.dest_ip != NOT_STATED)
                 return DEST_IP_MENTIONED;
+
+            if (domain_flag != NOT_STATED)
+                return DOMAIN_MENTIONED;
             
-            param = get_ip_from_domain(optarg, DEST);
+            param = get_ip_from_domain(optarg);
             if (param == INCORRECT_DOMAIN)
                 return INCORRECT_DOMAIN;
 
-            if (!inet_aton(dest_ip_arr[0], &addr))
+            if (!inet_aton(ip_arr[0], &addr))
                 return INCORRECT_DEST_IP;
 
             comm.rule.dest_ip = addr.s_addr;
-            strcpy(dest_ip_arr[0], "");
+            strcpy(ip_arr[0], "");
+            domain_flag = DEST;
 
             break;
 
@@ -440,7 +443,7 @@ int main(int argc, char *argv[])
 {
     struct fw_comm comm;
     struct in_addr addr;
-    int res, i_src = 1, i_dest = 1;
+    int res, ip_ind = 1;
 
     /*const char del[15] = "com";
 
@@ -509,6 +512,9 @@ int main(int argc, char *argv[])
         case INCORRECT_DOMAIN:
             printf("ERROR: domain name is wrong\n");
             break;
+        case DOMAIN_MENTIONED:
+            printf("ERROR: prohibited to mention more than one domain name\n");
+            break;
         
         default:
             break;
@@ -519,8 +525,8 @@ int main(int argc, char *argv[])
         
     do
     {
-        for (int i = 0; i < strlen(*src_ip_arr) && strcmp(src_ip_arr[i], ""); i++)
-            printf("%s\n", src_ip_arr[i]);
+        for (int i = 0; i < strlen(*ip_arr) && strcmp(ip_arr[i], ""); i++)
+            printf("%s\n", ip_arr[i]);
 
         switch (comm.action)
         {
@@ -562,30 +568,25 @@ int main(int argc, char *argv[])
                 break;
         }
 
-        if (strcmp(src_ip_arr[i_src], ""))
+        if (ip_ind < strlen(*ip_arr) && strcmp(ip_arr[ip_ind], ""))
         {
-            if (!inet_aton(src_ip_arr[i_src], &addr))
+            if (!inet_aton(ip_arr[ip_ind], &addr))
                 return INCORRECT_SRC_IP;
 
-            comm.rule.src_ip = addr.s_addr;
+            if (domain_flag == SRC)
+                comm.rule.src_ip = addr.s_addr;
+            else if (domain_flag == DEST)
+                comm.rule.dest_ip = addr.s_addr;
 
-            strcpy(src_ip_arr[i_src], "");
-            i_src++;
-        }
-        else if (strcmp(dest_ip_arr[i_dest], ""))
-        {
-            if (!inet_aton(dest_ip_arr[i_dest], &addr))
-                return INCORRECT_DEST_IP;
-
-            comm.rule.dest_ip = addr.s_addr;
-
-            strcpy(dest_ip_arr[i_dest], "");
-            i_dest++;
+            strcpy(ip_arr[ip_ind], "");
+            ip_ind++;
         }
         else
             break;
         
     } while (1);
+
+    domain_flag = NOT_STATED;
 
     return EXIT_SUCCESS;
 }
