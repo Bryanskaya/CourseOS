@@ -136,12 +136,50 @@ char* str_rule(struct fw_rule *rule)
     return res;
 }
 
+char* str_packet(uint32_t src_ip, uint16_t src_port,uint32_t dest_ip, uint16_t dest_port, char *protocol_str)
+{
+    int count_bytes = 0;
+
+    char *res = kmalloc(BUF_LEN, GFP_KERNEL);
+    if (!res)
+    {
+        printk(KERN_INFO "FIREWALL: error in formating rule");
+        return NULL;
+    }
+
+    if (src_ip != NOT_STATED)
+        count_bytes = snprintf(res, 30, "src_ip: %u.%u.%u.%u \t ", 
+                                        IP_POS(src_ip, 3), 
+                                        IP_POS(src_ip, 2),
+                                        IP_POS(src_ip, 1),
+                                        IP_POS(src_ip, 0));
+
+    if (src_port != NOT_STATED)
+        count_bytes += snprintf(res + count_bytes, 20, "src_port: %u \t ", ntohs(src_port));
+    else
+        count_bytes += snprintf(res + count_bytes, 20, "src_port: - \t ");
+
+    if (dest_ip != NOT_STATED)
+        count_bytes += snprintf(res + count_bytes, 30, "dest_ip: %u.%u.%u.%u \t ",
+                                IP_POS(dest_ip, 3),
+                                IP_POS(dest_ip, 2),
+                                IP_POS(dest_ip, 1),
+                                IP_POS(dest_ip, 0));
+
+    if (dest_port != NOT_STATED)
+        count_bytes += snprintf(res + count_bytes, 20, "dest_port: %u \t ", ntohs(dest_port));
+    else
+        count_bytes += snprintf(res + count_bytes, 20, "dest_port: - \t ");
+
+    snprintf(res + count_bytes, 20, "protocol: %s", protocol_str);
+
+    return res;
+}
+
 
 static void add_rule(struct fw_rule *rule)
 {
     struct rule_item *node;
-
-    printk(KERN_INFO ">>> FIREWALL: func add rule was called");
    
     node = (struct rule_item *)kmalloc(sizeof(struct rule_item), GFP_KERNEL);
     if (node == NULL)
@@ -201,7 +239,7 @@ ssize_t fw_read(struct file *filp, char __user *buff, size_t count, loff_t *f_po
     struct rule_item *node;
     char *read_ptr;
 
-    printk(KERN_INFO ">>> FIREWALL: func read was called");
+    //printk(KERN_INFO ">>> FIREWALL: func read was called");
 
     if (in_lst->next != &in_list)
     {
@@ -236,7 +274,7 @@ ssize_t fw_write(struct file *filp, const char __user *buff, size_t count, loff_
 {
     struct fw_comm rule_full;
 
-    printk(KERN_INFO ">>> FIREWALL: func write was called");
+    //printk(KERN_INFO ">>> FIREWALL: func write was called");
 
     if (count < sizeof(struct fw_comm))
     {
@@ -271,7 +309,6 @@ ssize_t fw_write(struct file *filp, const char __user *buff, size_t count, loff_
 
     return 0;
 }
-
 
 /*
 * struct sk_buff *skb - socket buffer
@@ -324,7 +361,7 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
 
     lst = list_rule;
     list_for_each_entry(node, lst, list)
-    {
+    {       
         rule = &node->rule;
 
         if (rule->protocol != NOT_STATED && rule->protocol != iph->protocol)
@@ -342,17 +379,8 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
         if (rule->dest_port != NOT_STATED && dest_port != NOT_STATED && rule->dest_port != dest_port)
             continue;
 
-        printk(KERN_INFO ">>> FIREWALL: packet was dropped. Details: "
-                "src_ip: %d.%d.%d.%d \t "
-                "src_port: %d \t "
-                "dest_ip: %d.%d.%d.%d \t "
-                "dest_port: %d \t "
-                "protocol: %s", 
-                IP_POS(src_ip, 3), IP_POS(src_ip, 2), IP_POS(src_ip, 1), IP_POS(src_ip, 0),
-                src_port,
-                IP_POS(dest_ip, 3), IP_POS(dest_ip, 2), IP_POS(dest_ip, 1), IP_POS(dest_ip, 0),
-                dest_port,
-                protocol_str);
+        printk(KERN_INFO ">>> FIREWALL: packet was dropped. Details: %s", 
+            str_packet(src_ip, src_port, dest_ip, dest_port, protocol_str));
 
         return NF_DROP; /* discarded the packet */
     }

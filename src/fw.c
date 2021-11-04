@@ -360,7 +360,6 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
                 return INCORRECT_DEST_IP;
 
             comm.rule.src_ip = addr.s_addr;
-            strcpy(ip_arr[0], "");
             domain_flag = SRC;
 
             break;
@@ -380,7 +379,6 @@ int parse_comm(int argc, char **argv, struct fw_comm *res_comm)
                 return INCORRECT_DEST_IP;
 
             comm.rule.dest_ip = addr.s_addr;
-            strcpy(ip_arr[0], "");
             domain_flag = DEST;
 
             break;
@@ -445,12 +443,12 @@ int main(int argc, char *argv[])
     struct in_addr addr;
     int res, ip_ind = 1;
 
-    /*const char del[15] = "com";
+    /*const char del[15] = "vk.com";
 
-    res = get_ip_from_domain(del, SRC);
+    res = get_ip_from_domain(del);
 
-    for (int i = 0; i < strlen(*src_ip_arr) && strcmp(src_ip_arr[i], ""); i++)
-        printf("%s\n", src_ip_arr[i]);*/
+    for (int i = 0; i < strlen(*ip_arr) && strcmp(ip_arr[i], ""); i++)
+        printf("%s\n",ip_arr[i]);*/
 
     res = parse_comm(argc, argv, &comm);
 
@@ -525,8 +523,8 @@ int main(int argc, char *argv[])
         
     do
     {
-        for (int i = 0; i < strlen(*ip_arr) && strcmp(ip_arr[i], ""); i++)
-            printf("%s\n", ip_arr[i]);
+        /*for (int i = 0; i < strlen(*ip_arr) && strcmp(ip_arr[i], ""); i++)
+            printf("%s\n", ip_arr[i]);*/
 
         switch (comm.action)
         {
@@ -578,11 +576,14 @@ int main(int argc, char *argv[])
             else if (domain_flag == DEST)
                 comm.rule.dest_ip = addr.s_addr;
 
-            strcpy(ip_arr[ip_ind], "");
             ip_ind++;
         }
         else
+        {
+            for (int i = 0; i < strlen(*ip_arr) && strcmp(ip_arr[i], ""); i++)
+                strcpy(ip_arr[ip_ind], "");
             break;
+        }
         
     } while (1);
 
