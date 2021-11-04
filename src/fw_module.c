@@ -104,6 +104,8 @@ char* str_rule(struct fw_rule *rule)
         count_bytes += snprintf(res, 10, "IN \t ");
     else if (rule->in == OUT)
         count_bytes += snprintf(res, 10, "OUT \t ");
+    else
+        printk(KERN_INFO "%d", rule->in);
 
     if (rule->src_ip != NOT_STATED)
         count_bytes = snprintf(res, 30, "src_ip: %u.%u.%u.%u \t ", 
@@ -362,7 +364,7 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
     lst = list_rule;
     list_for_each_entry(node, lst, list)
     {       
-        rule = &node->rule;
+        rule = &node->rule; 
 
         if (rule->protocol != NOT_STATED && rule->protocol != iph->protocol)
             continue;
@@ -370,13 +372,16 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
         if (rule->src_ip != NOT_STATED && !SAME_ADDR(rule->src_ip, src_ip))
             continue;
 
-        if (rule->src_port != NOT_STATED && src_port != NOT_STATED && rule->src_port != src_port)
-            continue;
-        
         if (rule->dest_ip != NOT_STATED && !SAME_ADDR(rule->dest_ip, dest_ip))
             continue;
 
-        if (rule->dest_port != NOT_STATED && dest_port != NOT_STATED && rule->dest_port != dest_port)
+        if (src_port == NOT_STATED)
+            continue;
+
+        if (rule->src_port != NOT_STATED && rule->src_port != src_port)
+            continue;
+        
+        if (rule->dest_port != NOT_STATED && rule->dest_port != dest_port)
             continue;
 
         printk(KERN_INFO ">>> FIREWALL: packet was dropped. Details: %s", 
@@ -470,17 +475,16 @@ static void __exit fw_exit(void)
 
     list_for_each_entry_safe(node, node_temp, &in_list, list)
     {
+        printk(KERN_INFO ">>> FIREWALL: rule was removed. Rule: %s", str_rule(&(node->rule)));
         list_del(&node->list);
         kfree(node);
-        printk(KERN_INFO ">>> FIREWALL: rule was removed. Rule: %s", str_rule(&(node->rule)));
-
     }
 
     list_for_each_entry_safe(node, node_temp, &out_list, list)
     {
+        printk(KERN_INFO ">>> FIREWALL: rule was removed. Rule: %s", str_rule(&(node->rule)));
         list_del(&node->list);
         kfree(node);
-        printk(KERN_INFO ">>> FIREWALL: rule was removed. Rule: %s", str_rule(&(node->rule)));
     }
 
     misc_deregister(&dev);
