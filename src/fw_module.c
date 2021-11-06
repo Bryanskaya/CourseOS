@@ -20,6 +20,9 @@
 #include <linux/syscalls.h>
 
 #include <linux/miscdevice.h>
+#include <linux/syscalls.h>
+
+#include <linux/miscdevice.h>
 #include <linux/stat.h>
 
 #include <linux/string.h>
