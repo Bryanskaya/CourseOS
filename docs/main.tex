@@ -1,0 +1,23 @@
+%\documentclass[12pt, a4paper]{article}
+\include{inc/fmt/preambule.tex}
+
+% ---------------------- Документ ----------------------
+\begin{document}
+	\includepdf[pages=1]{inc/00-title.pdf}
+	\includepdf[pages=1]{inc/01-TT.pdf}
+
+	\normalsize
+	\setcounter{page}{3}
+
+	\tableofcontents
+	\pagebreak
+
+	\include{inc/01-abstract}
+	\include{inc/10-analysis}
+	\include{inc/20-design}
+	\include{inc/30-technology}
+	%\include{inc/40-research}
+	%\include{inc/50-conclusion}
+	\include{inc/60-bibliography}
+	%\include{inc/70-application}
+\end{document}
