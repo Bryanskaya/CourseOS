@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  20 NOV 2021 01:07
+This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  22 NOV 2021 19:52
 entering extended mode
 **./main.tex
 (main.tex
@@ -684,7 +684,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip54
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 64.
+Package hyperref Info: Option `colorlinks' set `true' on input line 66.
 
 Package fontspec Info: Font family 'Arial(0)' created for font 'Arial' with
 (fontspec)             options [Ligatures=TeX].
@@ -1140,10 +1140,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
- [3]
+ [3] [4]
 \openout2 = `inc/01-abstract.aux'.
 
- (inc/01-abstract.tex
+
+(inc/01-abstract.tex
 Overfull \hbox (7.1417pt too wide) in paragraph at lines 8--9
 \TU/TimesNewRoman(0)/m/n/14.4 пользовать специальные программные средства, назы
 ваемые межсетевыми экра-
@@ -1155,9 +1156,9 @@ Overfull \hbox (15.17207pt too wide) in paragraph at lines 12--13
 ь задания правил филь-
  []
 
-[4
+[5
 
-]) [5]
+]) [6]
 \openout2 = `inc/10-analysis.aux'.
 
  (inc/10-analysis.tex
@@ -1168,7 +1169,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--9
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[6
+[7
 
 
 
@@ -1182,7 +1183,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 58--59
 
  []
 
-[7]
+[8]
 File: img/firewall.jpg Graphic file (type bmp)
 <img/firewall.jpg>
 
@@ -1195,7 +1196,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 85--86
 
  []
 
-[8]
+[9]
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
 nput line 94.
 
@@ -1204,7 +1205,7 @@ Overfull \hbox (1.52841pt too wide) in paragraph at lines 108--109
 t_func) \TU/TimesNewRoman(0)/m/n/14.4 нужны для фор-
  []
 
-[9]
+[10]
 Overfull \hbox (18.30025pt too wide) in paragraph at lines 114--115
 []\TU/TimesNewRoman(0)/b/n/14.4 MODULE_AUTHOR(”Name”), MODULE_DESCRIPTION(”LAB”
 ) \TU/TimesNewRoman(0)/m/n/14.4 – мак-
@@ -1215,7 +1216,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--117
 
  []
 
-[10]
+[11]
 Underfull \hbox (badness 10000) in paragraph at lines 152--153
 
  []
@@ -1231,20 +1232,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 174--175
 
  []
 
-[11]
+[12]
 Overfull \hbox (21.95189pt too wide) in paragraph at lines 183--184
 \TU/TimesNewRoman(0)/m/n/14.4 рой struct cdev, misc драйверы описываются с помо
 щью структуры struct miscdevice,
  []
 
-[12]
+[13]
 Underfull \hbox (badness 10000) in paragraph at lines 210--211
 
  []
 
 File: img/packets.pdf Graphic file (type pdf)
 <use img/packets.pdf>
-[13]
+[14]
 Underfull \hbox (badness 10000) in paragraph at lines 227--228
 
  []
@@ -1254,25 +1255,56 @@ Underfull \hbox (badness 10000) in paragraph at lines 251--252
 
  []
 
-[14] [15]) [16]
+[15] [16]) [17]
 \openout2 = `inc/20-design.aux'.
 
- (inc/20-design.tex) [17
+ (inc/20-design.tex
+Underfull \hbox (badness 10000) in paragraph at lines 14--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--18
+
+ []
+
+File: img/init.pdf Graphic file (type pdf)
+<use img/init.pdf>
+[18
 
 
 
-]
+] [19]
+File: img/exit.pdf Graphic file (type pdf)
+<use img/exit.pdf>
+ [20]
+File: img/write.pdf Graphic file (type pdf)
+<use img/write.pdf>
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[21] [22]
+File: img/filter1.pdf Graphic file (type pdf)
+<use img/filter1.pdf>
+
+Overfull \hbox (54.71877pt too wide) in paragraph at lines 74--75
+ [] 
+ []
+
+File: img/filter2.png Graphic file (type bmp)
+<img/filter2.png>
+[23] [24]) [25]
 \openout2 = `inc/30-technology.aux'.
 
- (inc/30-technology.tex) [18
+ (inc/30-technology.tex) [26
 
 
 
 ]
 \openout2 = `inc/60-bibliography.aux'.
 
-
-(inc/60-bibliography.tex
+ (inc/60-bibliography.tex
 Underfull \hbox (badness 1406) in paragraph at lines 9--10
 []\TU/TimesNewRoman(0)/m/n/14.4 Рязанова Н.Ю., Курс лекций по дисциплине «Опера
 ционные системы»
@@ -1290,7 +1322,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--14
 :
  []
 
-) [19
+) [27
 
 
 
@@ -1299,15 +1331,15 @@ AED: lastpage setting LastPage
 (main.aux (inc/01-abstract.aux) (inc/10-analysis.aux) (inc/20-design.aux)
 (inc/30-technology.aux) (inc/60-bibliography.aux))
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 4DAFF48E7945A3183D6625035CF10CD1;4491.
+(rerunfilecheck)             Checksum: AE841B8ED6D9FEAAFF3CEEAB8E23EC6B;6000.
  ) 
 Here is how much of TeX's memory you used:
- 17359 strings out of 411275
- 312052 string characters out of 2835482
- 940466 words of memory out of 3000000
- 37476 multiletter control sequences out of 15000+600000
+ 17405 strings out of 411275
+ 312878 string characters out of 2835482
+ 940475 words of memory out of 3000000
+ 37517 multiletter control sequences out of 15000+600000
  406799 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  80i,17n,90p,851b,714s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.pdf (19 pages).
+Output written on main.pdf (27 pages).

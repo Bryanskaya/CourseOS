@@ -1,19 +1,25 @@
 \babel@toc {russian}{}\relax 
-\contentsline {section}{ВВЕДЕНИЕ}{4}{Doc-Start}%
-\contentsline {section}{\numberline {1}Аналитическая часть}{6}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Постановка задачи}{6}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Общие принципы работы сети}{6}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Межсетевой экран}{7}{subsection.1.3}%
-\contentsline {subsection}{\numberline {1.4}Загружаемый модуль ядра}{8}{subsection.1.4}%
-\contentsline {subsection}{\numberline {1.5}Управление внешними устройствами}{10}{subsection.1.5}%
-\contentsline {subsection}{\numberline {1.6}Драйвер в ОС Linux}{11}{subsection.1.6}%
-\contentsline {subsubsection}{\numberline {1.6.1}Misc Device Driver}{12}{subsubsection.1.6.1}%
-\contentsline {subsection}{\numberline {1.7}netfilter}{13}{subsection.1.7}%
-\contentsline {subsubsection}{\numberline {1.7.1}Точки перехвата}{13}{subsubsection.1.7.1}%
-\contentsline {subsubsection}{\numberline {1.7.2}Хук-функции}{14}{subsubsection.1.7.2}%
-\contentsline {subsection}{\numberline {1.8}Передача данных из адресного пространства пользователя в адресное пространство ядра и наоборот}{15}{subsection.1.8}%
-\contentsline {subsection}{\numberline {1.9}Выводы из аналитического раздела}{15}{subsection.1.9}%
-\contentsline {section}{\numberline {2}Конструкторская часть}{17}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Что-то про видимость модуля в системе}{17}{subsection.2.1}%
-\contentsline {section}{\numberline {3}Технологическая часть}{18}{section.3}%
-\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{19}{section.3}%
+\contentsline {section}{ВВЕДЕНИЕ}{5}{Doc-Start}%
+\contentsline {section}{\numberline {1}Аналитическая часть}{7}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Постановка задачи}{7}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Общие принципы работы сети}{7}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Межсетевой экран}{8}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Загружаемый модуль ядра}{9}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Управление внешними устройствами}{11}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}Драйвер в ОС Linux}{12}{subsection.1.6}%
+\contentsline {subsubsection}{\numberline {1.6.1}Misc Device Driver}{13}{subsubsection.1.6.1}%
+\contentsline {subsection}{\numberline {1.7}netfilter}{14}{subsection.1.7}%
+\contentsline {subsubsection}{\numberline {1.7.1}Точки перехвата}{14}{subsubsection.1.7.1}%
+\contentsline {subsubsection}{\numberline {1.7.2}Хук-функции}{15}{subsubsection.1.7.2}%
+\contentsline {subsection}{\numberline {1.8}Передача данных из адресного пространства пользователя в адресное пространство ядра и наоборот}{16}{subsection.1.8}%
+\contentsline {subsection}{\numberline {1.9}Выводы из аналитического раздела}{16}{subsection.1.9}%
+\contentsline {section}{\numberline {2}Конструкторская часть}{18}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Требования к программе}{18}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Инициализация модуля}{18}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Завершение работы модуля}{20}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Основные функции, определённые в struct file\_operations}{21}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Функция фильтрации пакетов}{22}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Что-то про видимость модуля в системе}{25}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Выводы}{25}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Технологическая часть}{26}{section.3}%
+\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{27}{section.3}%
