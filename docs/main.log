@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  24 NOV 2021 11:13
+This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  24 NOV 2021 15:02
 entering extended mode
 **./main.tex
 (main.tex
@@ -1238,9 +1238,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 198--199
  []
 
 [13]
-Overfull \hbox (21.95189pt too wide) in paragraph at lines 207--208
-\TU/TimesNewRoman(0)/m/n/14.4 рой struct cdev, misc драйверы описываются с помо
-щью структуры struct miscdevice,
+Underfull \hbox (badness 10000) in paragraph at lines 220--222
+
  []
 
 [14]
@@ -1339,20 +1338,20 @@ Underfull \hbox (badness 1406) in paragraph at lines 9--10
  []
 
 
-Underfull \hbox (badness 2302) in paragraph at lines 11--12
+Underfull \hbox (badness 10000) in paragraph at lines 11--12
+[]\TU/TimesNewRoman(0)/m/n/14.4 lsmod [Электронный ресурс]. – Режим доступа:
+ []
+
+
+Underfull \hbox (badness 2302) in paragraph at lines 15--16
 []\TU/TimesNewRoman(0)/m/n/14.4 Misc Device Driver – Linux Device Driver Tutori
 al Part 32 [Электрон-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--14
+Underfull \hbox (badness 10000) in paragraph at lines 17--18
 []\TU/TimesNewRoman(0)/m/n/14.4 NETFILTER [Электронный ресурс]. – Режим доступа
 :
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 15--16
-[]\TU/TimesNewRoman(0)/m/n/14.4 lsmod [Электронный ресурс]. – Режим доступа:
  []
 
 ) [29
@@ -1373,6 +1372,6 @@ Here is how much of TeX's memory you used:
  37554 multiletter control sequences out of 15000+600000
  406799 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 80i,17n,90p,851b,1104s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 80i,17n,90p,851b,714s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on main.pdf (29 pages).
