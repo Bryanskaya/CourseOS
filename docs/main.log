@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  22 NOV 2021 19:52
+This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  24 NOV 2021 11:13
 entering extended mode
 **./main.tex
 (main.tex
@@ -1217,45 +1217,55 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--117
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 152--153
+Underfull \hbox (badness 10000) in paragraph at lines 141--142
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 176--177
 
  []
 
 
-Overfull \hbox (5.4337pt too wide) in paragraph at lines 163--164
+Overfull \hbox (5.4337pt too wide) in paragraph at lines 187--188
 []\TU/TimesNewRoman(0)/m/n/14.4 позволяют автоматически находить соответствующи
 е устройства при
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 174--175
+Underfull \hbox (badness 10000) in paragraph at lines 198--199
 
  []
 
-[12]
-Overfull \hbox (21.95189pt too wide) in paragraph at lines 183--184
+[13]
+Overfull \hbox (21.95189pt too wide) in paragraph at lines 207--208
 \TU/TimesNewRoman(0)/m/n/14.4 рой struct cdev, misc драйверы описываются с помо
 щью структуры struct miscdevice,
  []
 
-[13]
-Underfull \hbox (badness 10000) in paragraph at lines 210--211
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 231--232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 234--235
 
  []
 
 File: img/packets.pdf Graphic file (type pdf)
 <use img/packets.pdf>
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 227--228
-
- []
-
-
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 251--252
 
  []
 
-[15] [16]) [17]
+
+Underfull \hbox (badness 10000) in paragraph at lines 275--276
+
+ []
+
+[16] [17]) [18]
 \openout2 = `inc/20-design.aux'.
 
  (inc/20-design.tex
@@ -1270,34 +1280,52 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--18
 
 File: img/init.pdf Graphic file (type pdf)
 <use img/init.pdf>
-[18
+[19
 
 
 
-] [19]
+] [20]
 File: img/exit.pdf Graphic file (type pdf)
 <use img/exit.pdf>
- [20]
+ [21]
+File: img/read.pdf Graphic file (type pdf)
+<use img/read.pdf>
 File: img/write.pdf Graphic file (type pdf)
 <use img/write.pdf>
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[21] [22]
+[22]
+File: img/add_rule.pdf Graphic file (type pdf)
+<use img/add_rule.pdf>
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: img/del_rule.png Graphic file (type bmp)
+<img/del_rule.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[23]
+
+LaTeX Warning: Text page 24 contains only floats.
+
+[24]
 File: img/filter1.pdf Graphic file (type pdf)
 <use img/filter1.pdf>
 
-Overfull \hbox (54.71877pt too wide) in paragraph at lines 74--75
+Overfull \hbox (9.84851pt too wide) in paragraph at lines 95--96
  [] 
  []
 
 File: img/filter2.png Graphic file (type bmp)
 <img/filter2.png>
-[23] [24]) [25]
+[25] [26]) [27]
 \openout2 = `inc/30-technology.aux'.
 
- (inc/30-technology.tex) [26
+ (inc/30-technology.tex) [28
 
 
 
@@ -1322,7 +1350,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--14
 :
  []
 
-) [27
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--16
+[]\TU/TimesNewRoman(0)/m/n/14.4 lsmod [Электронный ресурс]. – Режим доступа:
+ []
+
+) [29
 
 
 
@@ -1331,15 +1364,15 @@ AED: lastpage setting LastPage
 (main.aux (inc/01-abstract.aux) (inc/10-analysis.aux) (inc/20-design.aux)
 (inc/30-technology.aux) (inc/60-bibliography.aux))
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: AE841B8ED6D9FEAAFF3CEEAB8E23EC6B;6000.
+(rerunfilecheck)             Checksum: 5E496710399DB7D4B32586E53D36FA4F;6262.
  ) 
 Here is how much of TeX's memory you used:
- 17405 strings out of 411275
- 312878 string characters out of 2835482
+ 17444 strings out of 411275
+ 313557 string characters out of 2835482
  940475 words of memory out of 3000000
- 37517 multiletter control sequences out of 15000+600000
+ 37554 multiletter control sequences out of 15000+600000
  406799 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 80i,17n,90p,851b,714s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 80i,17n,90p,851b,1104s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.pdf (27 pages).
+Output written on main.pdf (29 pages).
