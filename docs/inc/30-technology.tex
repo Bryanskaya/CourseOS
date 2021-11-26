@@ -1,1 +1,55 @@
 \section{Технологическая часть}
+
+\subsection{Выбор языка программирования}
+В качестве языка программирования был выбран С. \cite{c} Для сборки модуля использовалась утилита make.
+
+Была выбрана среда разработки Visual Studio Code \cite{VStudio}, так как она бесплатная, кроссплатформенная,  а также позволяет использовать все возможности консоли, не переключаясь между окнами. \newline
+
+\subsection{Структура модуля}
+Реализованный модуль включает в себя следующие функции:
+\begin{itemize}
+	\item \textbf{fw\_init()} -- функция инициализации модуля;
+	
+	\item \textbf{fw\_exit()}-- функция выгрузки модуля;
+	
+	\item \textbf{hide()} -- функция изменения видимости модуля (скрытие);
+	
+	\item \textbf{unhide()} -- функция изменения видимости модуля (обнаружение);
+	
+	\item \textbf{fw\_read(struct file *filp, char \_\_user *buff, size\_t count, loff\_t *f\_pos)} -- функция чтения, описываемая в структуре struct file\_operations;
+	
+	\item \textbf{fw\_write(struct file *filp, const char \_\_user *buff, size\_t count, loff\_t *f\_pos)} -- функция записи, описываемая в структуре struct file\_operations;
+	
+	\item \textbf{add\_rule(struct fw\_rule *rule)} -- добавление нового правила;
+	
+	\item \textbf{del\_rule(struct fw\_rule *rule)} -- удаление правила;
+	
+	\item \textbf{fw\_in\_filter(void *priv, struct sk\_buff *skb, const struct nf\_hook\_state *state)} -- <<обёртка>> функции фильтрации для входящих пакетов;
+	
+	\item \textbf{fw\_out\_filter(void *priv, struct sk\_buff *skb, const struct nf\_hook\_state *state)} -- <<обёртка>> функции фильтрации для исходящих пакетов;
+	
+	\item \textbf{filter(void *priv, struct sk\_buff *skb, const struct nf\_hook\_state *state,
+	struct list\_head *list\_rule)} -- основная функция фильтрации пакетов;
+	
+	\item \textbf{str\_rule(struct fw\_rule *rule)} -- функция преобразования правила фильтрации в удобный для восприятия человеком вид;
+	
+	\item \textbf{str\_packet(uint32\_t src\_ip, uint16\_t src\_port,uint32\_t dest\_ip, uint16\_t \, dest\_port, char *protocol\_str)} -- функция преобразования информации о перехваченном пакете в удобный для восприятия человеком вид. \newline
+\end{itemize}
+%
+Были также определены структуры:
+%
+\begin{itemize}
+	\item struct file\_operations;
+	
+	\item struct miscdevice;
+	
+	\item struct nf\_hook\_ops. \newline
+\end{itemize}
+%
+В Приложении А представлены листинги кода программы. \newline
+%
+\subsection{Makefile}
+
+\subsection{Демонстрация работы модуля}
+
+\subsection{Вывод}

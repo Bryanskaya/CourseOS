@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  24 NOV 2021 15:02
+This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  26 NOV 2021 12:33
 entering extended mode
 **./main.tex
 (main.tex
@@ -925,7 +925,7 @@ LaTeX Warning: Unused global option(s):
     [ut8x].
 
 (main.aux (inc/01-abstract.aux) (inc/10-analysis.aux) (inc/20-design.aux)
-(inc/30-technology.aux) (inc/60-bibliography.aux))
+(inc/30-technology.aux) (inc/60-bibliography.aux) (inc/70-application.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -1136,11 +1136,11 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
+) [3])
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
- [3] [4]
+ [4]
 \openout2 = `inc/01-abstract.aux'.
 
 
@@ -1324,11 +1324,37 @@ File: img/filter2.png Graphic file (type bmp)
 [25] [26]) [27]
 \openout2 = `inc/30-technology.aux'.
 
- (inc/30-technology.tex) [28
+ (inc/30-technology.tex
+Underfull \hbox (badness 10000) in paragraph at lines 6--7
+
+ []
+
+
+Overfull \hbox (9.42464pt too wide) in paragraph at lines 21--22
+[]\TU/TimesNewRoman(0)/b/n/14.4 fw_write(struct file *filp, const char __user *
+buff, size_t count, loff_t *f_pos)
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--37
+
+ []
+
+[28
 
 
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 46--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 49--51
+
+ []
+
+) [29]
 \openout2 = `inc/60-bibliography.aux'.
 
  (inc/60-bibliography.tex
@@ -1354,24 +1380,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--18
 :
  []
 
-) [29
+
+Underfull \hbox (badness 3907) in paragraph at lines 19--20
+[]\TU/TimesNewRoman(0)/m/n/14.4 Документвция по языку С [Электронный ресурс]. –
+ Режим доступа:
+ []
+
+) [30
 
 
 
-] 
+]
+\openout2 = `inc/70-application.aux'.
+
+ (inc/70-application.tex [31
+
+
+
+] [32] [33] [34] [35] [36] [37] [38] [39]
+[40] [41]) [42] 
 AED: lastpage setting LastPage
 (main.aux (inc/01-abstract.aux) (inc/10-analysis.aux) (inc/20-design.aux)
-(inc/30-technology.aux) (inc/60-bibliography.aux))
+(inc/30-technology.aux) (inc/60-bibliography.aux) (inc/70-application.aux))
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 5E496710399DB7D4B32586E53D36FA4F;6262.
+(rerunfilecheck)             Checksum: 76A997A9747D948261272CF7D6D6A7D7;7339.
  ) 
 Here is how much of TeX's memory you used:
- 17444 strings out of 411275
- 313557 string characters out of 2835482
- 940475 words of memory out of 3000000
- 37554 multiletter control sequences out of 15000+600000
+ 17719 strings out of 411275
+ 317209 string characters out of 2835482
+ 1102475 words of memory out of 3000000
+ 37822 multiletter control sequences out of 15000+600000
  406799 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 80i,17n,90p,851b,714s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 80i,17n,90p,851b,1145s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.pdf (29 pages).
+Output written on main.pdf (42 pages).
