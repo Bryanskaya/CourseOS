@@ -24,9 +24,15 @@
 \contentsline {subsection}{\numberline {2.7}Выводы}{27}{subsection.2.7}%
 \contentsline {section}{\numberline {3}Технологическая часть}{28}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Выбор языка программирования}{28}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Структура модуля}{28}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Makefile}{29}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Демонстрация работы модуля}{29}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}Вывод}{29}{subsection.3.5}%
-\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{30}{subsection.3.5}%
-\contentsline {section}{ПРИЛОЖЕНИЕ A}{31}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.2}Структура загружаемого модуля}{28}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Структура проекта}{29}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Сборка и запуск модуля}{29}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Демонстрация работы модуля}{30}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Команды и формат задания правил}{30}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}*протокол}{30}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}*ip телефона}{30}{subsubsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.4}*доменное имя}{30}{subsubsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.6}Вывод}{30}{subsection.3.6}%
+\contentsline {section}{ЗАКЛЮЧЕНИЕ}{31}{subsection.3.6}%
+\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{32}{subsection.3.6}%
+\contentsline {section}{ПРИЛОЖЕНИЕ A}{33}{subsection.3.6}%

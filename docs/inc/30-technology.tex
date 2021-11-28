@@ -5,7 +5,7 @@
 
 Была выбрана среда разработки Visual Studio Code \cite{VStudio}, так как она бесплатная, кроссплатформенная,  а также позволяет использовать все возможности консоли, не переключаясь между окнами. \newline
 
-\subsection{Структура модуля}
+\subsection{Структура загружаемого модуля}
 Реализованный модуль включает в себя следующие функции:
 \begin{itemize}
 	\item \textbf{fw\_init()} -- функция инициализации модуля;
@@ -33,7 +33,7 @@
 	
 	\item \textbf{str\_rule(struct fw\_rule *rule)} -- функция преобразования правила фильтрации в удобный для восприятия человеком вид;
 	
-	\item \textbf{str\_packet(uint32\_t src\_ip, uint16\_t src\_port,uint32\_t dest\_ip, uint16\_t \, dest\_port, char *protocol\_str)} -- функция преобразования информации о перехваченном пакете в удобный для восприятия человеком вид. \newline
+	\item \textbf{str\_packet(uint32\_t src\_ip, uint16\_t src\_port,uint32\_t dest\_ip, uint16\_t \, dest\_port, char *protocol\_str)} -- функция преобразования информации о перехваченном пакете в удобный для восприятия человеком вид.
 \end{itemize}
 %
 Были также определены структуры:
@@ -45,11 +45,48 @@
 	
 	\item struct nf\_hook\_ops. \newline
 \end{itemize}
+
+\subsection{Структура проекта}
+Проект состоит из нескольких частей:
+\begin{itemize}
+	\item \textbf{fw\_module.c} -- загружаемый модуль;
+	
+	\item \textbf{fw.h} -- основные структуры;
+	
+	\item \textbf{fw.c} -- непосредственное взаимодействие с пользователем, включающее обработку вводимых им данных;
+	 
+	\item \textbf{errors.h} -- коды обрабатываемых ошибок.
+\end{itemize}
 %
-В Приложении А представлены листинги кода программы. \newline
+В Приложении А представлены листинги каждой из частей проекта. \newline
 %
-\subsection{Makefile}
+
+\subsection{Сборка и запуск модуля}
+Сборка модуля осуществляется командой make. На Листинге \ref{lst:make} приведено содержимое Makefile.
+
+\begin{lstlisting}[caption = {Makefile}, label=lst:make]
+obj-m += fw_module.o
+
+all: fw.o fw_module.o
+
+fw.o: fw.c fw.h
+	gcc -o fw.o fw.c	
+
+fw_module.o: fw_module.c
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+clean:
+	rm -rf fw *.o
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+\end{lstlisting}
+
+Для того, чтобы загрузить модуль, нужно воспользоваться командой \textbf{sudo insmod fw\_module.ko}, для того, чтобы выгрузить -- \textbf{sudo rmmod fw\_module}. \newline
 
 \subsection{Демонстрация работы модуля}
+\subsubsection{Команды и формат задания правил}
+\subsubsection{*протокол}
+\subsubsection{*ip телефона}
+\subsubsection{*доменное имя}
 
 \subsection{Вывод}
+В этом разделе был выбран язык программирования и среда разработки, описана общая структура модуля и продемонстрированы некоторые его возможности.

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  26 NOV 2021 12:33
+This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.11.8)  28 NOV 2021 17:37
 entering extended mode
 **./main.tex
 (main.tex
@@ -925,7 +925,9 @@ LaTeX Warning: Unused global option(s):
     [ut8x].
 
 (main.aux (inc/01-abstract.aux) (inc/10-analysis.aux) (inc/20-design.aux)
-(inc/30-technology.aux) (inc/60-bibliography.aux) (inc/70-application.aux))
+(inc/30-technology.aux) (inc/50-conclusion.aux) (inc/60-bibliography.aux)
+(inc/70-application.aux) (inc/71-application.aux) (inc/72-application.aux)
+(inc/73-application.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -939,8 +941,7 @@ LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 5.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 5
 .
-
-(C:\Program Files\MiKTeX\tex/latex/base\ts1cmr.fd
+ (C:\Program Files\MiKTeX\tex/latex/base\ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 5.
@@ -1335,11 +1336,6 @@ Overfull \hbox (9.42464pt too wide) in paragraph at lines 21--22
 buff, size_t count, loff_t *f_pos)
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 36--37
-
- []
-
 [28
 
 
@@ -1350,11 +1346,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 46--47
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--51
+Underfull \hbox (badness 10000) in paragraph at lines 61--63
 
  []
 
-) [29]
+[29]
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
+
+ []
+
+) [30]
+\openout2 = `inc/50-conclusion.aux'.
+
+ (inc/50-conclusion.tex) [31
+
+
+
+]
 \openout2 = `inc/60-bibliography.aux'.
 
  (inc/60-bibliography.tex
@@ -1386,32 +1394,57 @@ Underfull \hbox (badness 3907) in paragraph at lines 19--20
  Режим доступа:
  []
 
-) [30
+) [32
 
 
 
 ]
 \openout2 = `inc/70-application.aux'.
 
- (inc/70-application.tex [31
+ (inc/70-application.tex [33
 
 
 
-] [32] [33] [34] [35] [36] [37] [38] [39]
-[40] [41]) [42] 
+] [34] [35] [36] [37] [38] [39] [40] [41]
+[42] [43]) [44]
+\openout2 = `inc/71-application.aux'.
+
+ (inc/71-application.tex) [45
+
+
+
+]
+\openout2 = `inc/72-application.aux'.
+
+ (inc/72-application.tex [46
+
+
+
+]
+[47] [48] [49] [50] [51] [52] [53] [54] [55] [56] [57]) [58]
+\openout2 = `inc/73-application.aux'.
+
+
+(inc/73-application.tex) [59
+
+
+
+] 
 AED: lastpage setting LastPage
 (main.aux (inc/01-abstract.aux) (inc/10-analysis.aux) (inc/20-design.aux)
-(inc/30-technology.aux) (inc/60-bibliography.aux) (inc/70-application.aux))
+(inc/30-technology.aux) (inc/50-conclusion.aux) (inc/60-bibliography.aux)
+(inc/70-application.aux) (inc/71-application.aux) (inc/72-application.aux)
+(inc/73-application.aux))
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 76A997A9747D948261272CF7D6D6A7D7;7339.
+(rerunfilecheck)             Checksum: 26639FD78DB2B5DBC0CB5CB8E01F1F55;8679.
  ) 
 Here is how much of TeX's memory you used:
- 17719 strings out of 411275
- 317209 string characters out of 2835482
- 1102475 words of memory out of 3000000
- 37822 multiletter control sequences out of 15000+600000
+ 18017 strings out of 411275
+ 321772 string characters out of 2835482
+ 1135475 words of memory out of 3000000
+ 38092 multiletter control sequences out of 15000+600000
  406799 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 80i,17n,90p,851b,1145s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 80i,17n,90p,851b,1143s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.pdf (42 pages).
+Output written on main.pdf (59 pages).

@@ -1,9 +1,10 @@
 \section*{ПРИЛОЖЕНИЕ A}
 \addcontentsline{toc}{section}{ПРИЛОЖЕНИЕ A}
-\begin{lstlisting}[caption = {Загружаемый модуль}, label=lst:code_module]
+\begin{lstlisting}[caption = {fw\_module.c}]
+#include "fw.h"
+
 #define IP_POS(ip, pos) (ip >> ((8 * (3 - pos))) & 0xFF)
 #define SAME_ADDR(ip1, ip2) ((ip1 ^ ip2) == 0)
-
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Bryanskaya Ekaterina <bryanskayakatya@yandex.ru>");
@@ -56,7 +57,6 @@ int fw_release(struct inode *inode, struct file *file)
 	return 0;
 }
 
-
 char* str_rule(struct fw_rule *rule)
 {
 	int count_bytes = 0;
@@ -76,21 +76,13 @@ char* str_rule(struct fw_rule *rule)
 		printk(KERN_INFO "%d", rule->in);
 	
 	if (rule->src_ip != NOT_STATED)
-		count_bytes = snprintf(res, 30, "src_ip: %u.%u.%u.%u \t ", 
-			IP_POS(rule->src_ip, 3), 
-			IP_POS(rule->src_ip, 2),
-			IP_POS(rule->src_ip, 1),
-			IP_POS(rule->src_ip, 0));
+		count_bytes = snprintf(res, 30, "src_ip: %u.%u.%u.%u \t ", IP_POS(rule->src_ip, 3), IP_POS(rule->src_ip, 2), IP_POS(rule->src_ip, 1), IP_POS(rule->src_ip, 0));
 	
 	if (rule->src_port != NOT_STATED)
-	count_bytes += snprintf(res + count_bytes, 20, "src_port: %u \t ", ntohs(rule->src_port));
+		count_bytes += snprintf(res + count_bytes, 20, "src_port: %u \t ", ntohs(rule->src_port));
 	
 	if (rule->dest_ip != NOT_STATED)
-		count_bytes += snprintf(res + count_bytes, 30, "dest_ip: %u.%u.%u.%u \t ",
-			IP_POS(rule->dest_ip, 3),
-			IP_POS(rule->dest_ip, 2),
-			IP_POS(rule->dest_ip, 1),
-			IP_POS(rule->dest_ip, 0));
+		count_bytes += snprintf(res + count_bytes, 30, "dest_ip: %u.%u.%u.%u \t ", IP_POS(rule->dest_ip, 3), IP_POS(rule->dest_ip, 2), IP_POS(rule->dest_ip, 1), IP_POS(rule->dest_ip, 0));
 	
 	if (rule->dest_port != NOT_STATED)
 		count_bytes += snprintf(res + count_bytes, 20, "dest_port: %u \t ", ntohs(rule->dest_port));
@@ -98,9 +90,9 @@ char* str_rule(struct fw_rule *rule)
 	if (rule->protocol != NOT_STATED)
 	{
 		if (rule->protocol == IPPROTO_TCP)
-		snprintf(res + count_bytes, 20, "protocol: TCP");
+			snprintf(res + count_bytes, 20, "protocol: TCP");
 		else if (rule->protocol == IPPROTO_UDP)
-		snprintf(res + count_bytes, 20, "protocol: UDP");
+			snprintf(res + count_bytes, 20, "protocol: UDP");
 	}
 	
 	return res;
@@ -118,23 +110,15 @@ char* str_packet(uint32_t src_ip, uint16_t src_port,uint32_t dest_ip, uint16_t d
 	}
 	
 	if (src_ip != NOT_STATED)
-		count_bytes = snprintf(res, 30, "src_ip: %u.%u.%u.%u \t ", 
-			IP_POS(src_ip, 3), 
-			IP_POS(src_ip, 2),
-			IP_POS(src_ip, 1),
-			IP_POS(src_ip, 0));
+		count_bytes = snprintf(res, 30, "src_ip: %u.%u.%u.%u \t ", IP_POS(src_ip, 3), IP_POS(src_ip, 2), IP_POS(src_ip, 1), IP_POS(src_ip, 0));
 	
 	if (src_port != NOT_STATED)
-	count_bytes += snprintf(res + count_bytes, 20, "src_port: %u \t ", ntohs(src_port));
+		count_bytes += snprintf(res + count_bytes, 20, "src_port: %u \t ", ntohs(src_port));
 	else
-	count_bytes += snprintf(res + count_bytes, 20, "src_port: - \t ");
+		count_bytes += snprintf(res + count_bytes, 20, "src_port: - \t ");
 	
 	if (dest_ip != NOT_STATED)
-	count_bytes += snprintf(res + count_bytes, 30, "dest_ip: %u.%u.%u.%u \t ",
-		IP_POS(dest_ip, 3),
-		IP_POS(dest_ip, 2),
-		IP_POS(dest_ip, 1),
-		IP_POS(dest_ip, 0));
+		count_bytes += snprintf(res + count_bytes, 30, "dest_ip: %u.%u.%u.%u \t ", IP_POS(dest_ip, 3), IP_POS(dest_ip, 2), IP_POS(dest_ip, 1), IP_POS(dest_ip, 0));
 	
 	if (dest_port != NOT_STATED)
 		count_bytes += snprintf(res + count_bytes, 20, "dest_port: %u \t ", ntohs(dest_port));
@@ -160,9 +144,9 @@ static void add_rule(struct fw_rule *rule)
 	node->rule = *rule;
 	
 	if (node->rule.in == IN)
-	list_add_tail(&node->list, &in_list);
+		list_add_tail(&node->list, &in_list);
 	else
-	list_add_tail(&node->list, &out_list);
+		list_add_tail(&node->list, &out_list);
 	
 	printk(KERN_INFO ">>> FIREWALL: new rule was added. Rule: %s", str_rule(&(node->rule)));
 }
@@ -173,26 +157,22 @@ static void del_rule(struct fw_rule *rule)
 	struct rule_item *node;
 	
 	if (rule->in == IN)
-	lst = &in_list;
+		lst = &in_list;
 	else
-	lst = &out_list;
+		lst = &out_list;
 	
 	for (temp = lst; temp->next != lst; temp = temp->next)
 	{
 		node = list_entry(temp->next, struct rule_item, list);
 		
-		if (node->rule.in == rule->in &&
-		node->rule.src_ip == rule->src_ip &&
-		node->rule.src_port == rule->src_port &&
-		node->rule.dest_ip == rule->dest_ip &&
-		node->rule.dest_port == rule->dest_port &&
-		node->rule.protocol == rule->protocol)
+		if (node->rule.in == rule->in && node->rule.src_ip == rule->src_ip &&
+			node->rule.src_port == rule->src_port && node->rule.dest_ip == rule->dest_ip &&
+			node->rule.dest_port == rule->dest_port && node->rule.protocol == rule->protocol)
 		{
 			list_del(temp->next);
 			kfree(node);
 			
 			printk(KERN_INFO ">>> FIREWALL: rule was removed. Rule: %s", str_rule(rule));
-			
 			return;
 		}
 	}
@@ -291,11 +271,11 @@ struct list_head *list_rule)
 	struct fw_rule *rule;
 	
 	if (!skb || list_rule->next == list_rule)
-	return NF_ACCEPT;
+		return NF_ACCEPT;
 	
 	iph = (struct iphdr *)skb_network_header(skb);
 	if (iph == NULL)
-	return NF_ACCEPT;
+		return NF_ACCEPT;
 	
 	protocol = iph->protocol;
 	src_ip = iph->saddr;
@@ -316,7 +296,7 @@ struct list_head *list_rule)
 		protocol_str = "TCP";
 	}
 	else
-	protocol_str = "-";
+		protocol_str = "-";
 	
 	lst = list_rule;
 	list_for_each_entry(node, lst, list)
@@ -324,22 +304,17 @@ struct list_head *list_rule)
 		rule = &node->rule; 
 		
 		if (rule->protocol != NOT_STATED && rule->protocol != iph->protocol)
-		continue;
-		
+			continue;
 		if (rule->src_ip != NOT_STATED && !SAME_ADDR(rule->src_ip, src_ip))
-		continue;
-		
+			continue;
 		if (rule->dest_ip != NOT_STATED && !SAME_ADDR(rule->dest_ip, dest_ip))
-		continue;
-		
+			continue;
 		if (src_port == NOT_STATED)
-		continue;
-		
+			continue;
 		if (rule->src_port != NOT_STATED && rule->src_port != src_port)
-		continue;
-		
+			continue;
 		if (rule->dest_port != NOT_STATED && rule->dest_port != dest_port)
-		continue;
+			continue;
 		
 		printk(KERN_INFO ">>> FIREWALL: packet was dropped. Details: %s", 
 		str_packet(src_ip, src_port, dest_ip, dest_port, protocol_str));
@@ -415,8 +390,7 @@ static int __init fw_init(void)
 	nf_register_net_hook(&init_net, &fw_in_hook_ops);
 	nf_register_net_hook(&init_net, &fw_out_hook_ops);
 	
-	printk(KERN_INFO ">>> FIREWALL: module was loaded. Major number of char device %s is 10, minor is %d",
-	DEVICE_FNAME, dev.minor);
+	printk(KERN_INFO ">>> FIREWALL: module was loaded. Major number of char device %s is 10, minor is %d", DEVICE_FNAME, dev.minor);
 	
 	return res;
 }
@@ -450,9 +424,6 @@ static void __exit fw_exit(void)
 	printk(KERN_INFO ">>> FIREWALL: module was unloaded!\n");
 }
 
-
 module_init(fw_init);
 module_exit(fw_exit);
 \end{lstlisting}
-
-\pagebreak
