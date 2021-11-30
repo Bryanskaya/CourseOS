@@ -375,9 +375,6 @@ static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook
         if (rule->dest_ip != NOT_STATED && !SAME_ADDR(rule->dest_ip, dest_ip))
             continue;
 
-        if (src_port == NOT_STATED)
-            continue;
-
         if (rule->src_port != NOT_STATED && rule->src_port != src_port)
             continue;
         
