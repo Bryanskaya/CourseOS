@@ -20,9 +20,6 @@
 #include <linux/syscalls.h>
 
 #include <linux/miscdevice.h>
-#include <linux/syscalls.h>
-
-#include <linux/miscdevice.h>
 #include <linux/stat.h>
 
 #include <linux/string.h>
@@ -79,14 +76,14 @@ void unhide(void)
 
 int fw_open(struct inode *inode, struct file *file)
 {
-    printk(KERN_INFO ">>> FIREWALL: associated char device was opened");
+    //printk(KERN_INFO ">>> FIREWALL: associated char device was opened");
 
     return 0;
 }
 
 int fw_release(struct inode *inode, struct file *file)
 {
-    printk(KERN_INFO ">>> FIREWALL: associated char device was closed");
+    //printk(KERN_INFO ">>> FIREWALL: associated char device was closed");
 
     return 0;
 }
