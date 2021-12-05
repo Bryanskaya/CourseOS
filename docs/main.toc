@@ -8,31 +8,30 @@
 \contentsline {subsection}{\numberline {1.5}Изменение видимости модуля}{10}{subsection.1.5}%
 \contentsline {subsection}{\numberline {1.6}Управление внешними устройствами}{11}{subsection.1.6}%
 \contentsline {subsection}{\numberline {1.7}Драйвер в ОС Linux}{12}{subsection.1.7}%
-\contentsline {subsubsection}{\numberline {1.7.1}Misc Device Driver}{13}{subsubsection.1.7.1}%
-\contentsline {subsection}{\numberline {1.8}netfilter}{14}{subsection.1.8}%
+\contentsline {subsubsection}{\numberline {1.7.1}Misc Device Driver}{12}{subsubsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.8}netfilter}{13}{subsection.1.8}%
 \contentsline {subsubsection}{\numberline {1.8.1}Точки перехвата}{14}{subsubsection.1.8.1}%
 \contentsline {subsubsection}{\numberline {1.8.2}Хук-функции}{15}{subsubsection.1.8.2}%
-\contentsline {subsection}{\numberline {1.9}Передача данных из адресного пространства пользователя в адресное пространство ядра и наоборот}{16}{subsection.1.9}%
-\contentsline {subsection}{\numberline {1.10}Выводы из аналитического раздела}{16}{subsection.1.10}%
-\contentsline {section}{\numberline {2}Конструкторская часть}{18}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Требования к программе}{18}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Инициализация модуля}{18}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Завершение работы модуля}{20}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Основные функции, определяемые в struct file\_operations}{21}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Функции добавления и удаления правил}{22}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}Функция фильтрации пакетов}{24}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}Выводы}{26}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Технологическая часть}{27}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Выбор языка программирования}{27}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Структура загружаемого модуля}{27}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Структура проекта}{28}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Сборка и запуск модуля}{28}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}Демонстрация работы модуля}{29}{subsection.3.5}%
-\contentsline {subsubsection}{\numberline {3.5.1}Команды и формат задания правил}{29}{subsubsection.3.5.1}%
-\contentsline {subsubsection}{\numberline {3.5.2}Видимость модуля}{30}{subsubsection.3.5.2}%
-\contentsline {subsubsection}{\numberline {3.5.3}Фильтрация по протоколу}{31}{subsubsection.3.5.3}%
-\contentsline {subsubsection}{\numberline {3.5.4}Фильтрация по IP-адресу}{33}{subsubsection.3.5.4}%
-\contentsline {subsection}{\numberline {3.6}Вывод}{34}{subsection.3.6}%
-\contentsline {section}{ЗАКЛЮЧЕНИЕ}{35}{subsection.3.6}%
-\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{36}{subsection.3.6}%
-\contentsline {section}{ПРИЛОЖЕНИЕ A}{38}{subsection.3.6}%
+\contentsline {subsection}{\numberline {1.9}Выводы из аналитического раздела}{16}{subsection.1.9}%
+\contentsline {section}{\numberline {2}Конструкторская часть}{17}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Требования к программе}{17}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Инициализация модуля}{17}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Завершение работы модуля}{19}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Основные функции, определяемые в struct file\_operations}{20}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Функции добавления и удаления правил}{21}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Функция фильтрации пакетов}{23}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Выводы}{24}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Технологическая часть}{25}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Выбор языка программирования}{25}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Структура загружаемого модуля}{25}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Структура проекта}{26}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Сборка и запуск модуля}{26}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Демонстрация работы модуля}{27}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Команды и формат задания правил}{27}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Видимость модуля}{28}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}Фильтрация по протоколу}{29}{subsubsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.4}Фильтрация по IP-адресу}{31}{subsubsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.6}Вывод}{32}{subsection.3.6}%
+\contentsline {section}{ЗАКЛЮЧЕНИЕ}{33}{subsection.3.6}%
+\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{34}{subsection.3.6}%
+\contentsline {section}{ПРИЛОЖЕНИЕ A}{36}{subsection.3.6}%

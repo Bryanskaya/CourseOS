@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.12.1)  1 DEC 2021 17:32
+This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.10) (preloaded format=xelatex 2021.12.1)  5 DEC 2021 21:05
 entering extended mode
 **./main.tex
 (main.tex
@@ -1161,7 +1161,7 @@ Overfull \hbox (15.17207pt too wide) in paragraph at lines 6--7
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 18--19
+Underfull \hbox (badness 10000) in paragraph at lines 16--17
 
  []
 
@@ -1173,12 +1173,12 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 66--67
+Underfull \hbox (badness 10000) in paragraph at lines 64--65
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 69--70
+Underfull \hbox (badness 10000) in paragraph at lines 67--68
 
  []
 
@@ -1186,79 +1186,73 @@ Underfull \hbox (badness 10000) in paragraph at lines 69--70
 File: img/firewall.jpg Graphic file (type bmp)
 <img/firewall.jpg>
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 96--97
+Underfull \hbox (badness 10000) in paragraph at lines 94--95
 
  []
 
 [8]
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 105.
+nput line 103.
 
-Overfull \hbox (1.52841pt too wide) in paragraph at lines 119--120
+Overfull \hbox (1.52841pt too wide) in paragraph at lines 117--118
 []\TU/TimesNewRoman(0)/b/n/14.4 Макросы module_init(init_func), module_exit(exi
 t_func) \TU/TimesNewRoman(0)/m/n/14.4 нужны для фор-
  []
 
 [9]
-Overfull \hbox (18.30025pt too wide) in paragraph at lines 125--126
+Overfull \hbox (18.30025pt too wide) in paragraph at lines 123--124
 []\TU/TimesNewRoman(0)/b/n/14.4 MODULE_AUTHOR(”Name”), MODULE_DESCRIPTION(”LAB”
 ) \TU/TimesNewRoman(0)/m/n/14.4 – мак-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--128
+Underfull \hbox (badness 10000) in paragraph at lines 125--126
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 148--149
+Underfull \hbox (badness 10000) in paragraph at lines 146--147
 
  []
 
 [10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 183--184
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
 
  []
 
 
-Overfull \hbox (5.4337pt too wide) in paragraph at lines 194--195
-[]\TU/TimesNewRoman(0)/m/n/14.4 позволяют автоматически находить соответствующи
-е устройства при
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 205--206
+Underfull \hbox (badness 10000) in paragraph at lines 195--196
 
  []
 
-[12] [13]
-Underfull \hbox (badness 10000) in paragraph at lines 237--238
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 227--228
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 240--241
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 230--231
 
  []
 
 File: img/packets.pdf Graphic file (type pdf)
 <use img/packets.pdf>
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--248
+
+ []
+
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 257--258
+Underfull \hbox (badness 10000) in paragraph at lines 271--272
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 281--282
-
- []
-
-[15] [16]) [17]
+[15]) [16]
 \openout2 = `inc/20-design.aux'.
 
  (inc/20-design.tex
@@ -1273,14 +1267,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--18
 
 File: img/init.pdf Graphic file (type pdf)
 <use img/init.pdf>
-[18
+[17
 
 
 
-] [19]
+] [18]
 File: img/exit.pdf Graphic file (type pdf)
 <use img/exit.pdf>
- [20]
+ [19]
 File: img/read.pdf Graphic file (type pdf)
 <use img/read.pdf>
 File: img/write.pdf Graphic file (type pdf)
@@ -1289,7 +1283,7 @@ File: img/write.pdf Graphic file (type pdf)
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[21]
+[20]
 File: img/add_rule.pdf Graphic file (type pdf)
 <use img/add_rule.pdf>
 
@@ -1301,11 +1295,11 @@ File: img/del_rule.png Graphic file (type bmp)
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+[21]
+
+LaTeX Warning: Text page 22 contains only floats.
+
 [22]
-
-LaTeX Warning: Text page 23 contains only floats.
-
-[23]
 File: img/filter1.pdf Graphic file (type pdf)
 <use img/filter1.pdf>
 
@@ -1315,7 +1309,7 @@ Overfull \hbox (9.84851pt too wide) in paragraph at lines 95--96
 
 File: img/filter2.png Graphic file (type bmp)
 <img/filter2.png>
-[24] [25]) [26]
+[23]) [24]
 \openout2 = `inc/30-technology.aux'.
 
  (inc/30-technology.tex
@@ -1329,7 +1323,7 @@ Overfull \hbox (9.42464pt too wide) in paragraph at lines 21--22
 buff, size_t count, loff_t *f_pos)
  []
 
-[27
+[25
 
 
 
@@ -1343,14 +1337,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--63
 
  []
 
-[28]
+[26]
 Underfull \hbox (badness 10000) in paragraph at lines 83--84
 
  []
 
 File: img/screenshots/help/help.png Graphic file (type bmp)
 <img/screenshots/help/help.png>
-[29]
+[27]
 Underfull \hbox (badness 10000) in paragraph at lines 121--122
 
  []
@@ -1361,18 +1355,18 @@ File: img/screenshots/hide_unhide/hide_result.png Graphic file (type bmp)
 <img/screenshots/hide_unhide/hide_result.png>
 File: img/screenshots/rule_protocol/log_add_rule.png Graphic file (type bmp)
 <img/screenshots/rule_protocol/log_add_rule.png>
-[30]
+[28]
 File: img/screenshots/rule_protocol/1_rule_protocol.png Graphic file (type bmp)
 
 <img/screenshots/rule_protocol/1_rule_protocol.png>
 File: img/screenshots/rule_protocol/2_rule_protocol.png Graphic file (type bmp)
 
 <img/screenshots/rule_protocol/2_rule_protocol.png>
- [31]
+ [29]
 File: img/screenshots/rule_protocol/log_drop_packets.png Graphic file (type bmp
 )
 <img/screenshots/rule_protocol/log_drop_packets.png>
- [32]
+ [30]
 File: img/screenshots/rule_protocol/3_rule_protocol.png Graphic file (type bmp)
 
 <img/screenshots/rule_protocol/3_rule_protocol.png>
@@ -1394,18 +1388,18 @@ File: img/screenshots/ip/del_rule.png Graphic file (type bmp)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[33]
+[31]
 File: img/screenshots/ip/result.png Graphic file (type bmp)
 <img/screenshots/ip/result.png>
-) [34]
+) [32]
 \openout2 = `inc/50-conclusion.aux'.
 
  (inc/50-conclusion.tex
-Underfull \hbox (badness 10000) in paragraph at lines 23--24
+Underfull \hbox (badness 10000) in paragraph at lines 21--22
 
  []
 
-) [35
+) [33
 
 
 
@@ -1447,22 +1441,22 @@ Underfull \hbox (badness 4660) in paragraph at lines 23--24
 view=msvc-170 (дата обра-
  []
 
-[36
+[34
 
 
 
-]) [37]
+]) [35]
 \openout2 = `inc/70-application.aux'.
 
- (inc/70-application.tex [38
+ (inc/70-application.tex [36
 
 
 
-] [39] [40] [41] [42] [43] [44] [45]
-[46] [47] [48]) [49]
+] [37] [38] [39] [40] [41] [42] [43]
+[44] [45] [46]) [47]
 \openout2 = `inc/71-application.aux'.
 
- (inc/71-application.tex) [50
+ (inc/71-application.tex) [48
 
 
 
@@ -1470,15 +1464,15 @@ view=msvc-170 (дата обра-
 \openout2 = `inc/72-application.aux'.
 
  (inc/72-application.tex
-[51
+[49
 
 
 
-] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62]) [63]
+] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60]) [61]
 \openout2 = `inc/73-application.aux'.
 
 
-(inc/73-application.tex) [64
+(inc/73-application.tex) [62
 
 
 
@@ -1489,15 +1483,15 @@ AED: lastpage setting LastPage
 (inc/70-application.aux) (inc/71-application.aux) (inc/72-application.aux)
 (inc/73-application.aux))
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: B8B3A10AC2E19ECD574E7165743A8258;8877.
+(rerunfilecheck)             Checksum: F30DCB341480E9E5F6447F66568F366C;8066.
  ) 
 Here is how much of TeX's memory you used:
- 18964 strings out of 411059
- 358034 string characters out of 2830150
+ 18956 strings out of 411059
+ 357966 string characters out of 2830150
  1140002 words of memory out of 3000000
- 39242 multiletter control sequences out of 15000+600000
+ 39234 multiletter control sequences out of 15000+600000
  406799 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 80i,17n,90p,851b,1143s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 80i,17n,90p,569b,1143s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.pdf (64 pages).
+Output written on main.pdf (62 pages).
