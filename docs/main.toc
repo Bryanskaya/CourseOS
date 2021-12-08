@@ -1,37 +1,36 @@
 \babel@toc {russian}{}\relax 
 \contentsline {section}{ВВЕДЕНИЕ}{5}{Doc-Start}%
 \contentsline {section}{\numberline {1}Аналитическая часть}{6}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Цель и задачи}{6}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Общие принципы работы сети}{6}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.1}Постановка задачи}{6}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Передача информации}{6}{subsection.1.2}%
 \contentsline {subsection}{\numberline {1.3}Межсетевой экран}{7}{subsection.1.3}%
-\contentsline {subsection}{\numberline {1.4}Загружаемый модуль ядра}{8}{subsection.1.4}%
-\contentsline {subsection}{\numberline {1.5}Изменение видимости модуля}{10}{subsection.1.5}%
-\contentsline {subsection}{\numberline {1.6}Управление внешними устройствами}{11}{subsection.1.6}%
-\contentsline {subsection}{\numberline {1.7}Драйвер в ОС Linux}{12}{subsection.1.7}%
-\contentsline {subsubsection}{\numberline {1.7.1}Misc Device Driver}{12}{subsubsection.1.7.1}%
-\contentsline {subsection}{\numberline {1.8}netfilter}{13}{subsection.1.8}%
-\contentsline {subsubsection}{\numberline {1.8.1}Точки перехвата}{14}{subsubsection.1.8.1}%
-\contentsline {subsubsection}{\numberline {1.8.2}Хук-функции}{15}{subsubsection.1.8.2}%
-\contentsline {subsection}{\numberline {1.9}Выводы из аналитического раздела}{16}{subsection.1.9}%
-\contentsline {section}{\numberline {2}Конструкторская часть}{17}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Требования к программе}{17}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Инициализация модуля}{17}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Завершение работы модуля}{19}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Основные функции, определяемые в struct file\_operations}{20}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Функции добавления и удаления правил}{21}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}Функция фильтрации пакетов}{23}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}Выводы}{24}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Технологическая часть}{25}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Выбор языка программирования}{25}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Структура загружаемого модуля}{25}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Структура проекта}{26}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Сборка и запуск модуля}{26}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}Демонстрация работы модуля}{27}{subsection.3.5}%
-\contentsline {subsubsection}{\numberline {3.5.1}Команды и формат задания правил}{27}{subsubsection.3.5.1}%
-\contentsline {subsubsection}{\numberline {3.5.2}Видимость модуля}{28}{subsubsection.3.5.2}%
-\contentsline {subsubsection}{\numberline {3.5.3}Фильтрация по протоколу}{29}{subsubsection.3.5.3}%
-\contentsline {subsubsection}{\numberline {3.5.4}Фильтрация по IP-адресу}{31}{subsubsection.3.5.4}%
-\contentsline {subsection}{\numberline {3.6}Вывод}{32}{subsection.3.6}%
-\contentsline {section}{ЗАКЛЮЧЕНИЕ}{33}{subsection.3.6}%
-\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{34}{subsection.3.6}%
-\contentsline {section}{ПРИЛОЖЕНИЕ A}{36}{subsection.3.6}%
+\contentsline {subsection}{\numberline {1.4}Загружаемые модули ядра}{8}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Изменение видимости модуля}{9}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}Управление внешними устройствами}{9}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.7}Анализ особенностей драйвера типа misc}{10}{subsection.1.7}%
+\contentsline {subsection}{\numberline {1.8}netfilter}{11}{subsection.1.8}%
+\contentsline {subsubsection}{\numberline {1.8.1}Точки перехвата}{12}{subsubsection.1.8.1}%
+\contentsline {subsubsection}{\numberline {1.8.2}Хук-функции}{12}{subsubsection.1.8.2}%
+\contentsline {subsection}{\numberline {1.9}Выводы}{13}{subsection.1.9}%
+\contentsline {section}{\numberline {2}Конструкторская часть}{15}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Определение требований к межсетевому экрану}{15}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Инициализация межсетевого экрана}{15}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Завершение работы межсетевого экрана}{17}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Основные функции, определяемые в struct file\_operations}{17}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Функции добавления и удаления правил}{19}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Функция фильтрации пакетов}{21}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Выводы}{23}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Технологическая часть}{24}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Выбор языка программирования}{24}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Структура загружаемого модуля}{24}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Структура проекта}{25}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Сборка и запуск модуля}{25}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Демонстрация работы модуля}{26}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Команды и формат задания правил}{26}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Видимость модуля}{27}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}Фильтрация по протоколу}{27}{subsubsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.4}Фильтрация по IP-адресу}{30}{subsubsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.6}Выводы}{31}{subsection.3.6}%
+\contentsline {section}{ЗАКЛЮЧЕНИЕ}{32}{subsection.3.6}%
+\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{33}{subsection.3.6}%
+\contentsline {section}{ПРИЛОЖЕНИЕ A}{35}{subsection.3.6}%
