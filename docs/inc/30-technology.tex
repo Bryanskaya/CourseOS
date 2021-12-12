@@ -47,19 +47,16 @@
 \end{itemize}
 
 \subsection{Структура проекта}
-Проект состоит из нескольких частей:
-\begin{itemize}
-	\item \textbf{fw\_module.c} -- загружаемый модуль;
-	
-	\item \textbf{fw.h} -- основные структуры;
-	
-	\item \textbf{fw.c} -- непосредственное взаимодействие с пользователем, включающее обработку вводимых им данных;
-	 
-	\item \textbf{errors.h} -- коды обрабатываемых ошибок.
-\end{itemize}
-%
+Проект состоит из нескольких частей (Рисунок \ref{fig30:image}).
+\begin{figure}[h!]
+	\begin{center}
+		{\includegraphics[scale = 0.63]{img/struct.pdf}}
+		\caption{Структура ПО}
+		\label{fig30:image}
+	\end{center}
+\end{figure}
+
 В Приложении А представлены листинги каждой из частей проекта. \newline
-%
 
 \subsection{Сборка и запуск модуля}
 Сборка модуля осуществляется командой make. На Листинге \ref{lst:make} приведено содержимое Makefile.
@@ -82,144 +79,86 @@ clean:
 
 Для того, чтобы загрузить модуль, нужно воспользоваться командой \textbf{sudo insmod fw\_module.ko}, для того, чтобы выгрузить -- \textbf{sudo rmmod fw\_module}. \newline
 
-\subsection{Демонстрация работы модуля} 
-
-\subsubsection{Команды и формат задания правил}
-Для того, чтобы посмотреть все команды и формат задаваемых правил, необходимо вызвать \textbf{help}. На Рисунке \ref{fig11:image} представлен результат.
-
-\begin{figure}[h]
-	\begin{center}
-		{\includegraphics[scale = 0.6]{img/screenshots/help/help.png}}
-		\caption{Вызов команды help}
-		\label{fig11:image}
-	\end{center}
-\end{figure}
-Для того, чтобы корректно задать правило фильтрации, необходимо соблюдать следующий формат.
-\begin{enumerate}
-	\item Обязательным является указание действий: добавление (add) или удаление (del).
+\subsection{Алгоритм фильтрации пакетов}
+На Листинге \ref{lst:filter} приведена реализация основного алгоритма фильтрации пакетов, описанного в параграфе \ref{sec:filter}. 
+\begin{lstlisting}[caption = {Реализация алгоритма фильтрации пакетов}, label=lst:filter]
+static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state, struct list_head *list_rule)
+{
+	struct iphdr *iph;
+	struct tcphdr *tcph;
+	struct udphdr *udph;
 	
-	\item Также в обязательном порядке следует конкретизировать направление пакетов: входящие (in) или исходящие (out).
-
-	\item Далее указываются основные признаки фильтрации (один или несколько):
-	\begin{itemize}
-		\item протокол (TCP/UDP);
+	unsigned char protocol;
+	char *protocol_str;
+	uint32_t src_ip, dest_ip;
+	uint16_t src_port = NOT_STATED, dest_port = NOT_STATED;
+	
+	struct list_head *lst;
+	struct rule_item *node;
+	struct fw_rule *rule;
+	
+	if (!skb || list_rule->next == list_rule)
+		return NF_ACCEPT;
+	
+	iph = (struct iphdr *)skb_network_header(skb);
+	if (iph == NULL)
+		return NF_ACCEPT;
+	
+	protocol = iph->protocol;
+	src_ip = iph->saddr;
+	dest_ip = iph->daddr;
+	
+	if (protocol == IPPROTO_UDP)
+	{
+		udph = (struct udphdr *)(skb_transport_header(skb));
+		src_port = udph->source;
+		dest_port = udph->dest;
+		protocol_str = "UDP";
+	}
+	else if (protocol == IPPROTO_TCP)
+	{
+		tcph = (struct tcphdr *)(skb_transport_header(skb));
+		src_port = tcph->source;
+		dest_port = tcph->dest;
+		protocol_str = "TCP";
+	}
+	else
+		protocol_str = "-";
+	
+	lst = list_rule;
+	list_for_each_entry(node, lst, list)
+	{       
+		rule = &node->rule; 
 		
-		\item IP-адрес (источника/назначения);
+		if (rule->protocol != NOT_STATED && rule->protocol != iph->protocol)
+			continue;
+		if (rule->src_ip != NOT_STATED && !SAME_ADDR(rule->src_ip, src_ip))
+			continue;	
+		if (rule->dest_ip != NOT_STATED && !SAME_ADDR(rule->dest_ip, dest_ip))
+			continue;
+		if (rule->src_port != NOT_STATED && rule->src_port != src_port)
+			continue;
+		if (rule->dest_port != NOT_STATED && rule->dest_port != dest_port)
+			continue;
 		
-		\item порт (источника/назначения);
+		printk(KERN_INFO ">>> FIREWALL: packet was dropped. Details: %s", str_packet(src_ip, src_port, dest_ip, dest_port, protocol_str));
 		
-		\item доменное имя (источника/назначения). \newline
-	\end{itemize}
+		return NF_DROP;
+	}
 	
-\end{enumerate}
+	return NF_ACCEPT;
+}
 
-\subsubsection{Видимость модуля}
-Для скрытия модуля следует вызвать команду \textbf{hide}, а для обратного действия \textbf{unhide}. На Рисунках \ref{fig12:image} -- \ref{fig13:image} демонстрируется следующее:
-\begin{enumerate}
-	\item модуль загружен и виден в системе;
-	
-	\item вызвана команда hide;
-	
-	\item модуль не отображается при вызове команды lsmod;
-	
-	\item вызвана команда unhide;
-	
-	\item модуль обнаруживается при вызове команды lsmod.
-\end{enumerate}
+static unsigned int fw_in_filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+	return filter(priv, skb, state, &in_list);
+}
 
-\begin{figure}[h]
-	\begin{center}
-		{\includegraphics[scale = 0.6]{img/screenshots/hide_unhide/hide_comm.png}}
-		\caption{Порядок действий}
-		\label{fig12:image}
-	\end{center}
-\end{figure}
-
-\begin{figure}[h]
-	\begin{center}
-		{\includegraphics[scale = 0.7]{img/screenshots/hide_unhide/hide_result.png}}
-		\caption{Логи}
-		\label{fig13:image}
-	\end{center}
-\end{figure}
-
-\subsubsection{Фильтрация по протоколу}
-Для наглядности было добавлено правило, блокирующее все входящие пакеты, для передачи которых используется протокол TCP.
-
-До того, как правило было добавлено, наблюдалась следующая динамика (Рисунок \ref{fig15:image}): происходил активный обмен пакетами, ошибки в процессе были, но не значительные.
-\begin{figure}[h]
-	\begin{center}
-		{\includegraphics[scale = 0.5]{img/screenshots/rule_protocol/1_rule_protocol.png}}
-		\caption{До добавления правила фильтрации}
-		\label{fig15:image}
-	\end{center}
-\end{figure}
-
-Когда же правило было зарегистрировано, ситуация изменилась (Рисунок \ref{fig16:image}). Примерно с 50 секунды наблюдается увеличение непринятых пакетов, более детальную информацию о них можно получить из log-файла (Рисунок \ref{fig17:image}). Легко заметить, что общее у всех непринятых пакетов -- поле протокола. 
-\begin{figure}[h]
-	\begin{center}
-		{\includegraphics[scale = 0.5]{img/screenshots/rule_protocol/2_rule_protocol.png}}
-		\caption{После добавления правила фильтрации}
-		\label{fig16:image}
-	\end{center}
-\end{figure}
-
-\begin{figure}[h]
-	\begin{center}
-		{\includegraphics[scale = 0.6]{img/screenshots/rule_protocol/log_drop_packets.png}}
-		\caption{Подробная информация о заблокированных пакетах}
-		\label{fig17:image}
-	\end{center}
-\end{figure}
-
-\newpage
-
-При удалении правила, пакеты больше не блокируются, и это видно на Рисунке \ref{fig18:image}.
-\begin{figure}[h!]
-	\begin{center}
-		{\includegraphics[scale = 0.5]{img/screenshots/rule_protocol/3_rule_protocol.png}}
-		\caption{После удаления правила фильтрации}
-		\label{fig18:image}
-	\end{center}
-\end{figure}
-
-\newpage
-
-С 80 секунды наблюдается резкое уменьшение ошибок и увеличение успешно обработанных пакетов. \newline
-
-\subsubsection{Фильтрация по IP-адресу}
-Модуль также предоставляет возможность отбора пакетов по IP-адресу получателя (в случае исходящих пакетов) и отправителя (входящие). 
-
-Было добавлено следующее правило (Рисунок \ref{fig19:image}) и через некоторое время удалено (Рисунок \ref{fig20:image}). 
-
-\begin{figure}[h]
-	\begin{center}
-		{\includegraphics[scale = 0.6]{img/screenshots/ip/add_rule.png}}
-		\caption{Добавление правила фильтрации по IP-адресу}
-		\label{fig19:image}
-	\end{center}
-\end{figure}
-
-\begin{figure}[h]
-	\begin{center}
-		{\includegraphics[scale = 0.6]{img/screenshots/ip/del_rule.png}}
-		\caption{Удаление правила фильтрации по IP-адресу}
-		\label{fig20:image}
-	\end{center}
-\end{figure}
-
-\newpage
-
-Устройство, имеющее IP-адрес 192.168.67.132, и устройство, на котором работает межсетевой экран находятся в одной подсети. Поэтому можно с помощью команды \textbf{ping} проверить соединение.
-
-Рисунок \ref{fig21:image} -- результат. Первые 5 и последние 6 пакетов успешно были отправлены в силу того, что правило ещё не было задано или уже удалено на момент их отправки.
-\begin{figure}[h]
-	\begin{center}
-		{\includegraphics[scale = 0.5]{img/screenshots/ip/result.png}}
-		\caption{Результат}
-		\label{fig21:image}
-	\end{center}
-\end{figure}
+static unsigned int fw_out_filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+	return filter(priv, skb, state, &out_list);
+}
+\end{lstlisting}
 
 \subsection{Выводы}
-В этом разделе был выбран язык программирования и среда разработки, описана общая структура модуля и продемонстрированы некоторые его возможности.
+Был выбран язык программирования и среда разработки, описана общая структура модуля и программного обеспечения, а также приведёна реализация основного алгоритма.

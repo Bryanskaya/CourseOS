@@ -2,35 +2,35 @@
 \contentsline {section}{ВВЕДЕНИЕ}{5}{Doc-Start}%
 \contentsline {section}{\numberline {1}Аналитическая часть}{6}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Постановка задачи}{6}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Передача информации}{6}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Межсетевой экран}{7}{subsection.1.3}%
-\contentsline {subsection}{\numberline {1.4}Загружаемые модули ядра}{8}{subsection.1.4}%
-\contentsline {subsection}{\numberline {1.5}Изменение видимости модуля}{9}{subsection.1.5}%
-\contentsline {subsection}{\numberline {1.6}Управление внешними устройствами}{9}{subsection.1.6}%
-\contentsline {subsection}{\numberline {1.7}Анализ особенностей драйвера типа misc}{10}{subsection.1.7}%
-\contentsline {subsection}{\numberline {1.8}netfilter}{11}{subsection.1.8}%
-\contentsline {subsubsection}{\numberline {1.8.1}Точки перехвата}{12}{subsubsection.1.8.1}%
-\contentsline {subsubsection}{\numberline {1.8.2}Хук-функции}{12}{subsubsection.1.8.2}%
-\contentsline {subsection}{\numberline {1.9}Выводы}{13}{subsection.1.9}%
-\contentsline {section}{\numberline {2}Конструкторская часть}{15}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Определение требований к межсетевому экрану}{15}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Инициализация межсетевого экрана}{15}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Завершение работы межсетевого экрана}{17}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Основные функции, определяемые в struct file\_operations}{17}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Функции добавления и удаления правил}{19}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}Функция фильтрации пакетов}{21}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}Выводы}{23}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Технологическая часть}{24}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Выбор языка программирования}{24}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Структура загружаемого модуля}{24}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Структура проекта}{25}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Сборка и запуск модуля}{25}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}Демонстрация работы модуля}{26}{subsection.3.5}%
-\contentsline {subsubsection}{\numberline {3.5.1}Команды и формат задания правил}{26}{subsubsection.3.5.1}%
-\contentsline {subsubsection}{\numberline {3.5.2}Видимость модуля}{27}{subsubsection.3.5.2}%
-\contentsline {subsubsection}{\numberline {3.5.3}Фильтрация по протоколу}{27}{subsubsection.3.5.3}%
-\contentsline {subsubsection}{\numberline {3.5.4}Фильтрация по IP-адресу}{30}{subsubsection.3.5.4}%
-\contentsline {subsection}{\numberline {3.6}Выводы}{31}{subsection.3.6}%
-\contentsline {section}{ЗАКЛЮЧЕНИЕ}{32}{subsection.3.6}%
-\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{33}{subsection.3.6}%
-\contentsline {section}{ПРИЛОЖЕНИЕ A}{35}{subsection.3.6}%
+\contentsline {subsection}{\numberline {1.2}Анализ процесса передачи информации}{6}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Загружаемые модули ядра}{7}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Анализ способа изменения видимости модуля}{8}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Анализ и выбор драйвера для межсетевого экрана}{9}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}Анализ точек перехватов пакетов}{10}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.7}Выводы}{12}{subsection.1.7}%
+\contentsline {section}{\numberline {2}Конструкторская часть}{13}{section.2}%
+\contentsline {subsection}{\numberline {2.1}IDEF0}{13}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Определение требований к межсетевому экрану}{14}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Инициализация межсетевого экрана}{15}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Завершение работы межсетевого экрана}{16}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Алгоритм чтения правил межсетевого экрана}{17}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Алгоритм обработки запроса}{18}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Алгоритм добавления правил}{19}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}Алгоритм удаления правила}{20}{subsection.2.8}%
+\contentsline {subsection}{\numberline {2.9}Алгоритм фильтрации пакетов}{21}{subsection.2.9}%
+\contentsline {section}{\numberline {3}Технологическая часть}{23}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Выбор языка программирования}{23}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Структура загружаемого модуля}{23}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Структура проекта}{24}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Сборка и запуск модуля}{24}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Алгоритм фильтрации пакетов}{25}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Выводы}{27}{subsection.3.6}%
+\contentsline {section}{\numberline {4}Исследовательская часть}{28}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Команды и формат задания правил}{28}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Видимость модуля}{29}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Фильтрация по протоколу}{29}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Фильтрация по IP-адресу}{32}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Выводы}{33}{subsection.4.5}%
+\contentsline {section}{ЗАКЛЮЧЕНИЕ}{34}{subsection.4.5}%
+\contentsline {section}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{35}{subsection.4.5}%
+\contentsline {section}{ПРИЛОЖЕНИЕ A}{37}{subsection.4.5}%

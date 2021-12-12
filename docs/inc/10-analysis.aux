@@ -4,48 +4,42 @@
 \@writefile{toc}{\contentsline {section}{\numberline {1}Аналитическая часть}{6}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Постановка задачи}{6}{subsection.1.1}\protected@file@percent }
 \newlabel{sec:task}{{1.1}{6}{Постановка задачи}{subsection.1.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Передача информации}{6}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Анализ процесса передачи информации}{6}{subsection.1.2}\protected@file@percent }
+\citation{fw}
+\citation{os}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Модель OSI\relax }}{7}{table.caption.1}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{osi_table}{{1}{7}{Модель OSI\relax }{table.caption.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Межсетевой экран}{7}{subsection.1.3}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces Принцип работы межсетевого экрана\relax }}{7}{figure.caption.2}\protected@file@percent }
 \newlabel{fig1:image}{{1.1}{7}{Принцип работы межсетевого экрана\relax }{figure.caption.2}{}}
-\citation{fw}
-\citation{os}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Загружаемые модули ядра}{8}{subsection.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Загружаемые модули ядра}{7}{subsection.1.3}\protected@file@percent }
+\citation{hide}
 \newlabel{lst:module}{{1}{8}{Команды для загрузки и выгрузки загружаемого модуля ядра}{lstlisting.1}{}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {1}Команды для загрузки и выгрузки загружаемого модуля ядра}{8}{lstlisting.1}\protected@file@percent }
-\citation{lsmod}
-\citation{hide}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.5}Изменение видимости модуля}{9}{subsection.1.5}\protected@file@percent }
-\newlabel{lst:struct_module}{{2}{9}{struct module}{lstlisting.2}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}struct module}{9}{lstlisting.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.6}Управление внешними устройствами}{9}{subsection.1.6}\protected@file@percent }
-\citation{os}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Анализ способа изменения видимости модуля}{8}{subsection.1.4}\protected@file@percent }
+\newlabel{lst:struct_module}{{2}{8}{struct module}{lstlisting.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}struct module}{8}{lstlisting.2}\protected@file@percent }
+\citation{2nd}
 \citation{2nd}
 \citation{misc}
-\newlabel{lst:file_op}{{3}{10}{struct file\_operations}{lstlisting.3}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}struct file\_operations}{10}{lstlisting.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.7}Анализ особенностей драйвера типа misc}{10}{subsection.1.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5}Анализ и выбор драйвера для межсетевого экрана}{9}{subsection.1.5}\protected@file@percent }
+\newlabel{lst:file_op}{{3}{9}{struct file\_operations}{lstlisting.3}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}struct file\_operations}{9}{lstlisting.3}\protected@file@percent }
+\newlabel{lst:misc}{{4}{9}{struct miscdevice}{lstlisting.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}struct miscdevice}{9}{lstlisting.4}\protected@file@percent }
 \citation{3d}
-\citation{hook}
-\newlabel{lst:misc}{{4}{11}{struct miscdevice}{lstlisting.4}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}struct miscdevice}{11}{lstlisting.4}\protected@file@percent }
-\newlabel{lst:misc_reg}{{5}{11}{Функции для регистрации и удаления misc драйвера}{lstlisting.5}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5}Функции для регистрации и удаления misc драйвера}{11}{lstlisting.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.8}netfilter}{11}{subsection.1.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.8.1}Точки перехвата}{12}{subsubsection.1.8.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1.2}{\ignorespaces Путь сетевого пакета\relax }}{12}{figure.caption.3}\protected@file@percent }
-\newlabel{fig2:image}{{1.2}{12}{Путь сетевого пакета\relax }{figure.caption.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.8.2}Хук-функции}{12}{subsubsection.1.8.2}\protected@file@percent }
-\newlabel{lst:hook}{{6}{13}{struct nf\_hook\_ops}{lstlisting.6}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {6}struct nf\_hook\_ops}{13}{lstlisting.6}\protected@file@percent }
-\newlabel{lst:hook_reg}{{7}{13}{Функции для регистрации и удаления хук-функций}{lstlisting.7}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {7}Функции для регистрации и удаления хук-функций}{13}{lstlisting.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.9}Выводы}{13}{subsection.1.9}\protected@file@percent }
+\newlabel{lst:misc_reg}{{5}{10}{Функции для регистрации и удаления misc драйвера}{lstlisting.5}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5}Функции для регистрации и удаления misc драйвера}{10}{lstlisting.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.6}Анализ точек перехватов пакетов}{10}{subsection.1.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1.2}{\ignorespaces Путь сетевого пакета\relax }}{11}{figure.caption.3}\protected@file@percent }
+\newlabel{fig2:image}{{1.2}{11}{Путь сетевого пакета\relax }{figure.caption.3}{}}
+\newlabel{lst:hook}{{6}{11}{struct nf\_hook\_ops}{lstlisting.6}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {6}struct nf\_hook\_ops}{11}{lstlisting.6}\protected@file@percent }
+\newlabel{lst:hook_reg}{{7}{12}{Функции для регистрации и удаления хук-функций}{lstlisting.7}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {7}Функции для регистрации и удаления хук-функций}{12}{lstlisting.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.7}Выводы}{12}{subsection.1.7}\protected@file@percent }
 \@setckpt{inc/10-analysis}{
-\setcounter{page}{15}
+\setcounter{page}{13}
 \setcounter{equation}{0}
 \setcounter{enumi}{5}
 \setcounter{enumii}{0}
@@ -55,7 +49,7 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{section}{1}
-\setcounter{subsection}{9}
+\setcounter{subsection}{7}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
@@ -64,10 +58,10 @@
 \setcounter{rlistctr}{0}
 \setcounter{caption@flags}{0}
 \setcounter{continuedfloat}{0}
-\setcounter{Item}{12}
+\setcounter{Item}{10}
 \setcounter{Hfootnote}{0}
 \setcounter{Hy@AnnotLevel}{0}
-\setcounter{bookmark@seq@number}{13}
+\setcounter{bookmark@seq@number}{9}
 \setcounter{lstnumber}{6}
 \setcounter{totalcount@figure}{0}
 \setcounter{totalcount@table}{0}
