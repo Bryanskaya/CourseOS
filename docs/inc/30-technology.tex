@@ -1,7 +1,7 @@
 \section{Технологическая часть}
 
 \subsection{Выбор языка программирования}
-В качестве языка программирования был выбран С \cite{c}. Для сборки модуля использовалась утилита make.
+В качестве языка программирования был выбран язык Си \cite{c}. Для сборки модуля использовалась утилита make.
 
 Была выбрана среда разработки Visual Studio Code \cite{VStudio}, так как она бесплатная, кроссплатформенная,  а также позволяет использовать все возможности консоли, не переключаясь между окнами. \newline
 
@@ -33,30 +33,8 @@
 	
 	\item \textbf{str\_rule(struct fw\_rule *rule)} -- функция преобразования правила фильтрации в удобный для восприятия человеком вид;
 	
-	\item \textbf{str\_packet(uint32\_t src\_ip, uint16\_t src\_port,uint32\_t dest\_ip, uint16\_t \, dest\_port, char *protocol\_str)} -- функция преобразования информации о перехваченном пакете в удобный для восприятия человеком вид.
+	\item \textbf{str\_packet(uint32\_t src\_ip, uint16\_t src\_port,uint32\_t dest\_ip, uint16\_t \, dest\_port, char *protocol\_str)} -- функция преобразования информации о перехваченном пакете в удобный для восприятия человеком вид. \newline
 \end{itemize}
-%
-Были также определены структуры:
-%
-\begin{itemize}
-	\item struct file\_operations;
-	
-	\item struct miscdevice;
-	
-	\item struct nf\_hook\_ops. \newline
-\end{itemize}
-
-\subsection{Структура проекта}
-Проект состоит из нескольких частей (Рисунок \ref{fig30:image}).
-\begin{figure}[h!]
-	\begin{center}
-		{\includegraphics[scale = 0.63]{img/struct.pdf}}
-		\caption{Структура ПО}
-		\label{fig30:image}
-	\end{center}
-\end{figure}
-
-В Приложении А представлены листинги каждой из частей проекта. \newline
 
 \subsection{Сборка и запуск модуля}
 Сборка модуля осуществляется командой make. На Листинге \ref{lst:make} приведено содержимое Makefile.
@@ -159,6 +137,3 @@ static unsigned int fw_out_filter(void *priv, struct sk_buff *skb, const struct 
 	return filter(priv, skb, state, &out_list);
 }
 \end{lstlisting}
-
-\subsection{Выводы}
-Был выбран язык программирования и среда разработки, описана общая структура модуля и программного обеспечения, а также приведёна реализация основного алгоритма.
