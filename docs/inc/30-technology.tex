@@ -57,9 +57,9 @@ clean:
 
 Для того, чтобы загрузить модуль, нужно воспользоваться командой \textbf{sudo insmod fw\_module.ko}, для того, чтобы выгрузить -- \textbf{sudo rmmod fw\_module}. \newline
 
-\subsection{Алгоритм фильтрации пакетов}
-На Листинге \ref{lst:filter} приведена реализация основного алгоритма фильтрации пакетов, описанного в параграфе \ref{sec:filter}. 
-\begin{lstlisting}[caption = {Реализация алгоритма фильтрации пакетов}, label=lst:filter]
+\subsection{Функция фильтрации пакетов}
+В параграфе \ref{sec:filter} описывается основной алгоритм фильтрации пакетов, который реализован функцией filter (Листинг \ref{lst:filter}).
+\begin{lstlisting}[caption = {Функция фильтрации пакетов}, label=lst:filter]
 static unsigned int filter(void *priv, struct sk_buff *skb, const struct nf_hook_state *state, struct list_head *list_rule)
 {
 	struct iphdr *iph;

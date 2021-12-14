@@ -52,9 +52,9 @@ Mkfile.old
 dkms.conf
 
 # Latex
-.aux
-.doc
-.toc
-.log
-.synctex
-.synctex.gz
+*.aux
+*.doc
+*.toc
+*.log
+*.synctex
+*.synctex.gz
