@@ -14,6 +14,9 @@
 
 ## Задание правил
 ```c
+   --hide                           Hide the module
+   --unhide                         Show the module
+   
 -a --add RULE                       Add a rule
 -d --del RULE                       Delete the rule
 
