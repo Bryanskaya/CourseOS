@@ -14,19 +14,22 @@
 
 ## Задание правил
 ```c
--a --add RULE     Add a rule
--d --del RULE     Delete the rule
+-a --add RULE                       Add a rule
+-d --del RULE                       Delete the rule
 
-    -i --in       Input
-    -o --out      Output
-    -p --protocol Protocol = {TCP, UDP}
+    -i --in                         Input
+    -o --out                        Output
+    -p --protocol                   Protocol = {TCP, UDP}
     
-        --src_ip IP     Source IP
-        --src_port PORT Source port
-        --src_domain DOMAIN Source domain name
+        --src_ip IP                 Source IP
+        --src_port PORT             Source port
+        --src_domain DOMAIN         Source domain name
         
-        --dest_ip IP     Destination IP
-        --dest_port PORT Destination port
-        --dest_domain DOMAIN Destination domain name
+        --dest_ip IP                Destination IP
+        --dest_port PORT            Destination port
+        --dest_domain DOMAIN        Destination domain name
+        
+ -A --all                           Show all the rules
+ -h --help                          Available commands
 ```
 
